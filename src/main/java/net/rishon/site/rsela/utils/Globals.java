@@ -5,15 +5,17 @@ import net.rishon.site.rsela.filemanager.ConfigHandler;
 
 public class Globals {
 
-    // PERMISSIONS
-
     private static final Configuration config = ConfigHandler.getConfig();
 
+    // PERMISSIONS
+
+    public static String rSela_bypass = config.getString("Maintenance.bypass-permission");
+    public static String rSela_maintenance = config.getString("Commands.Maintenance.permission");
     public static String rSela_reload = "rsela.command.reload";
-    public static String rSela_alert = config.getString("Alert.permission");
-    public static String rSela_find = config.getString("Find.permission");
-    public static String rSela_send = config.getString("Send.permission");
-    public static String rSela_serversend = config.getString("ServerSend.permission");
+    public static String rSela_alert = config.getString("Commands.Alert.permission");
+    public static String rSela_find = config.getString("Commands.Find.permission");
+    public static String rSela_send = config.getString("Commands.Send.permission");
+    public static String rSela_serversend = config.getString("Commands.ServerSend.permission");
 
     // MESSAGES
     public static String rSela_prefix = "§8[§brSela§8]§r ";

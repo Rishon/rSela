@@ -10,6 +10,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.commands.proxy.*;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
+import net.rishon.site.rsela.listeners.Connections;
 import net.rishon.site.rsela.utils.Globals;
 
 import java.nio.file.Path;
@@ -60,24 +61,28 @@ public class Main {
     }
 
     private void registerCommands() {
+
         server.getCommandManager().register(new rSela(), "rsela");
 
-        if (config.getBoolean("Alert.enabled")) {
-            server.getCommandManager().register(new Alert(server), config.getString("Alert.command"));
+        if (config.getBoolean("Commands.Alert.enabled")) {
+            server.getCommandManager().register(new Alert(server), config.getString("Commands.Alert.command"));
         }
-        if (config.getBoolean("Find.enabled")) {
-            server.getCommandManager().register(new Find(server), config.getString("Find.command"));
+        if (config.getBoolean("Commands.Find.enabled")) {
+            server.getCommandManager().register(new Find(server), config.getString("Commands.Find.command"));
         }
-        if (config.getBoolean("Send.enabled")) {
-            server.getCommandManager().register(new Send(server), config.getString("Send.command"));
+        if (config.getBoolean("Commands.Send.enabled")) {
+            server.getCommandManager().register(new Send(server), config.getString("Commands.Send.command"));
         }
-        if (config.getBoolean("ServerSend.enabled")) {
-            server.getCommandManager().register(new ServerSend(server), config.getString("ServerSend.command"));
+        if (config.getBoolean("Commands.ServerSend.enabled")) {
+            server.getCommandManager().register(new ServerSend(server), config.getString("Commands.ServerSend.command"));
+        }
+        if (config.getBoolean("Commands.Maintenance.enabled")) {
+            server.getCommandManager().register(new Maintenance(), config.getString("Commands.Maintenance.command"));
         }
     }
 
     private void registerListeners() {
-
+        server.getEventManager().register(this, new Connections());
     }
 
     @Subscribe

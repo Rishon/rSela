@@ -6,12 +6,10 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
 import net.rishon.site.rsela.utils.Globals;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,11 +35,11 @@ public class ServerSend implements Command {
         }
 
         if (args.length < 2) {
-            source.sendMessage(ColorUtil.format(config.getString("ServerSend.usage")));
+            source.sendMessage(ColorUtil.format(config.getString("Commands.ServerSend.usage")));
             return;
         }
 
-        String invalidFirst = ConfigHandler.getConfig().getString("ServerSend.invalid-server").replace("%server%", args[0]);
+        String invalidFirst = config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[0]);
 
         Optional<RegisteredServer> serverFrom = server.getServer(args[0]);
         if (!serverFrom.isPresent()) {
@@ -49,7 +47,7 @@ public class ServerSend implements Command {
             return;
         }
 
-        String invalidSecondary = ConfigHandler.getConfig().getString("ServerSend.invalid-server").replace("%server%", args[1]);
+        String invalidSecondary = config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[1]);
 
         Optional<RegisteredServer> serverTo = server.getServer(args[1]);
         if (!serverTo.isPresent()) {
@@ -58,11 +56,11 @@ public class ServerSend implements Command {
         }
 
         if (serverFrom == serverTo) {
-            source.sendMessage(ColorUtil.format(config.getString("ServerSend.same-target")));
+            source.sendMessage(ColorUtil.format(config.getString("Commands.ServerSend.same-target")));
             return;
         }
 
-        String sentPlayers = ConfigHandler.getConfig().getString("ServerSend.sent-players").replace("%firstServer%", args[0]).replace("%secondaryServer%", args[1]);
+        String sentPlayers = config.getString("Commands.ServerSend.sent-players").replace("%firstServer%", args[0]).replace("%secondaryServer%", args[1]);
 
         for (Player target : serverFrom.get().getPlayersConnected()) {
             Optional<RegisteredServer> connection = server.getServer(args[1]);
@@ -76,7 +74,7 @@ public class ServerSend implements Command {
     }
 
     @Override
-    public List<String> suggest(CommandSource source, @NonNull String[] currentArgs) {
+    public List<String> suggest(CommandSource source, String[] currentArgs) {
 
         Player player = (Player) source;
 

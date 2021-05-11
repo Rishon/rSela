@@ -36,12 +36,12 @@ public class Send implements Command {
         }
 
         if (args.length < 2) {
-            source.sendMessage(ColorUtil.format(config.getString("Send.usage")));
+            source.sendMessage(ColorUtil.format(config.getString("Commands.Send.usage")));
             return;
         }
 
-        String invalidServer = ConfigHandler.getConfig().getString("Send.invalid-server").replace("%server%", args[1]);
-        String sentAll = ConfigHandler.getConfig().getString("Send.sent-all").replace("%server%", args[1]);
+        String invalidServer = config.getString("Commands.Send.invalid-server").replace("%server%", args[1]);
+        String sentAll = config.getString("Commands.Send.sent-all").replace("%server%", args[1]);
 
         if (args[0].equalsIgnoreCase("all")) {
 
@@ -69,15 +69,15 @@ public class Send implements Command {
 
         Optional<Player> player = server.getPlayer(args[0]);
 
-        String offlineMessage = ConfigHandler.getConfig().getString("Send.player-offline").replace("%target%", args[0]);
+        String offlineMessage = config.getString("Commands.Send.player-offline").replace("%target%", args[0]);
 
         if (!player.isPresent()) {
             source.sendMessage(ColorUtil.format(offlineMessage));
             return;
         }
 
-        String alreadyIn = ConfigHandler.getConfig().getString("Send.already-in-server").replace("%target%", args[0]).replace("%server%", args[1]);
-        String sentPlayer = ConfigHandler.getConfig().getString("Send.sent-player").replace("%target%", args[0]).replace("%server%", args[1]);
+        String alreadyIn = config.getString("Commands.Send.already-in-server").replace("%target%", args[0]).replace("%server%", args[1]);
+        String sentPlayer = config.getString("Commands.Send.sent-player").replace("%target%", args[0]).replace("%server%", args[1]);
 
         Optional<RegisteredServer> Connection = server.getServer(args[1]);
         if (!Connection.isPresent()) {

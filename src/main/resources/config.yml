@@ -3,48 +3,64 @@
 #              Author: Rishon               #
 #  GitHub: https://github.com/Rishon/rSela  #
 
-version: 1.0.0 # Do not touch!
-check-for-updates: true
+version: 1.0.1 # Do not touch!
 
-# Commands
+# Network Maintenance
+# false = Allowing player connections.
+# true = Blocking player connecting to the server.
+Maintenance:
+  status: false
+  bypass-permission: "rsela.maintenance.bypass"
+  kick-message:
+    - "test1"
+    - "test2"
+    - "test3"
 
-Alert: # Manage the /alert command
-  enabled: true
-  command: "alert"
-  usage: "&7Usage: /alert <message>"
-  permission: "rsela.command.alert"
-  chat-message: true
-  title-message: true
-  actionbar-message: true
-  message: "&e[ALERT] &f%executor%&8: &c%message%"
-  title: "&eALERT"
-  subtitle: "&c%message%" # Leave empty for no subtitle.
-  actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
-
-Find: # Manage the /find command
-  enabled: true
-  command: "find"
-  usage: "&7Usage: /find <player>"
-  permission: "rsela.command.find"
-  offline-message: "&c%target% &7is offline."
-  online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
-
-Send: # Manage the /send command
-  enabled: true
-  command: "send"
-  usage: "&7Usage: /send <player/all> <server>"
-  permission: "rsela.command.send"
-  player-offline: "&c%target% &7is offline."
-  invalid-server: "&cInvalid Server: &e%server%"
-  already-in-server: "&c%target% &7is already connected to %server%"
-  sent-player: "&7You have sent &c%target% &7to &e%server%"
-  sent-all: "&7Sending &call of the players &7to &e%server%"
-
-ServerSend: # Manage the /serversend command
-  enabled: true
-  command: "serversend"
-  usage: "&7Usage: /serversend <server> <server>"
-  permission: "rsela.command.serversend"
-  invalid-server: "&cInvalid Server: &e%server%"
-  same-target: "&cFirst server and Secondary server cannot be the same."
-  sent-players: "&7Sending &e%firstServer% &7players to &e%secondaryServer% &7server."
+# Commands #
+Commands:
+  Maintenance: # Manage the /maintenance command
+    enabled: true
+    command: "maintenance"
+    usage: "&7Usage: /maintenance <on/off> &8| &7Status: &e%status%"
+    permission: "rsela.command.maintenance"
+    on-message: "&cMaintenance-mode &7has been &aenabled!"
+    off-message: "&cMaintenance-mode &7has been &cdisabled!"
+    already-on-message: "&cMaintenance-mode &7is already enabled."
+    already-off-message: "&cMaintenance-mode &7is already disabled."
+  Alert: # Manage the /alert command
+    enabled: true
+    command: "alert"
+    usage: "&7Usage: /alert <message>"
+    permission: "rsela.command.alert"
+    chat-message: true
+    title-message: true
+    actionbar-message: true
+    message: "&e[ALERT] &f%executor%&8: &c%message%"
+    title: "&eALERT"
+    subtitle: "&c%message%" # Leave empty for no subtitle.
+    actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
+  Find: # Manage the /find command
+    enabled: true
+    command: "find"
+    usage: "&7Usage: /find <player>"
+    permission: "rsela.command.find"
+    offline-message: "&c%target% &7is offline."
+    online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
+  Send: # Manage the /send command
+    enabled: true
+    command: "send"
+    usage: "&7Usage: /send <player/all> <server>"
+    permission: "rsela.command.send"
+    player-offline: "&c%target% &7is offline."
+    invalid-server: "&cInvalid Server: &e%server%"
+    already-in-server: "&c%target% &7is already connected to %server%"
+    sent-player: "&7You have sent &c%target% &7to &e%server%"
+    sent-all: "&7Sending &call of the players &7to &e%server%"
+  ServerSend: # Manage the /serversend command
+    enabled: true
+    command: "serversend"
+    usage: "&7Usage: /serversend <server> <server>"
+    permission: "rsela.command.serversend"
+    invalid-server: "&cInvalid Server: &e%server%"
+    same-target: "&cFirst server and Secondary server cannot be the same."
+    sent-players: "&7Sending &e%firstServer% &7players to &e%secondaryServer% &7server."

@@ -40,7 +40,7 @@ public class ConfigHandler {
         }
     }
 
-    public boolean saveConfig() {
+    public static boolean saveConfig() {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.config, new File(Main.dataDirectory.toFile(), "config.yml"));
             return true;

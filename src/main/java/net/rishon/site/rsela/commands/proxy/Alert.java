@@ -29,7 +29,7 @@ public class Alert implements Command {
         Configuration config = ConfigHandler.getConfig();
 
         if (args.length == 0) {
-            source.sendMessage(ColorUtil.format(config.getString("Alert.usage")));
+            source.sendMessage(ColorUtil.format(config.getString("Commands.Alert.usage")));
             return;
         }
 
@@ -39,10 +39,10 @@ public class Alert implements Command {
         }
 
         if (!(source instanceof Player)) {
-            String chatMessage = ConfigHandler.getConfig().getString("Alert.message").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
-            String titleMessage = ConfigHandler.getConfig().getString("Alert.title").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
-            String subtitleMessage = ConfigHandler.getConfig().getString("Alert.subtitle").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
-            String actionbarMessage = ConfigHandler.getConfig().getString("Alert.actionbar").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
+            String chatMessage = config.getString("Commands.Alert.message").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
+            String titleMessage = config.getString("Commands.Alert.title").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
+            String subtitleMessage = config.getString("Commands.Alert.subtitle").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
+            String actionbarMessage = config.getString("Commands.Alert.actionbar").replace("%message%", message.toString()).replace("%executor%", "CONSOLE");
 
             Title title = Title.title(ColorUtil.format(titleMessage), ColorUtil.format(subtitleMessage));
 
@@ -63,10 +63,10 @@ public class Alert implements Command {
 
             Player player = (Player) source;
 
-            String chatMessage = ConfigHandler.getConfig().getString("Alert.message").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
-            String titleMessage = ConfigHandler.getConfig().getString("Alert.title").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
-            String subtitleMessage = ConfigHandler.getConfig().getString("Alert.subtitle").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
-            String actionbarMessage = ConfigHandler.getConfig().getString("Alert.actionbar").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
+            String chatMessage = config.getString("Commands.Alert.message").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
+            String titleMessage = config.getString("Commands.Alert.title").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
+            String subtitleMessage = config.getString("Commands.Alert.subtitle").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
+            String actionbarMessage = config.getString("Commands.Alert.actionbar").replace("%message%", message.toString()).replace("%executor%", player.getUsername());
 
             Title title = Title.title(ColorUtil.format(titleMessage), ColorUtil.format(subtitleMessage));
 

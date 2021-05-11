@@ -34,20 +34,20 @@ public class Find implements Command {
         }
 
         if (args.length == 0) {
-            source.sendMessage(ColorUtil.format(config.getString("Find.usage")));
+            source.sendMessage(ColorUtil.format(config.getString("Commands.Find.usage")));
             return;
         }
 
         Optional<Player> player = server.getPlayer(args[0]);
 
-        String offlineMessage = ConfigHandler.getConfig().getString("Find.offline-message").replace("%target%", args[0]);
+        String offlineMessage = config.getString("Commands.Find.offline-message").replace("%target%", args[0]);
 
         if (!player.isPresent()) {
             source.sendMessage(ColorUtil.format(offlineMessage));
             return;
         }
 
-        String foundMessage = ConfigHandler.getConfig().getString("Find.online-message").replace("%target%", args[0]).replace("%server%", player.get().getCurrentServer().get().getServerInfo().getName());
+        String foundMessage = config.getString("Commands.Find.online-message").replace("%target%", args[0]).replace("%server%", player.get().getCurrentServer().get().getServerInfo().getName());
 
         source.sendMessage(ColorUtil.format(foundMessage));
     }

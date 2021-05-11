@@ -7,12 +7,11 @@ import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
 import net.rishon.site.rsela.utils.Globals;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class rSela implements Command {
 
     @Override
-    public void execute(CommandSource source, @NonNull String[] args) {
+    public void execute(CommandSource source, String[] args) {
 
         if (!source.hasPermission(Globals.rSela_reload)) {
             source.sendMessage(Component.text(Globals.noPermission));
