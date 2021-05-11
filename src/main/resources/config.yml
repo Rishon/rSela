@@ -1,15 +1,17 @@
-#                                         #
-#              rSela - v1.0.0             #
-#              Author: Rishon             #
-# GitHub: https://github.com/Rishon/rSela #
+#                                           #
+#              rSela - v1.0.0               #
+#              Author: Rishon               #
+#  GitHub: https://github.com/Rishon/rSela  #
+
 version: 1.0.0 # Do not touch!
 check-for-updates: true
 
+# Commands
 
 Alert: # Manage the /alert command
   command: "alert"
-  usage: "&7Usage: /alert"
-  permission:
+  usage: "&7Usage: /alert <message>"
+  permission: "rsela.command.alert"
   chat-message: true
   title-message: true
   actionbar-message: true
@@ -17,3 +19,28 @@ Alert: # Manage the /alert command
   title: "&eALERT"
   subtitle: "&c%message%" # Leave empty for no subtitle.
   actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
+
+Find: # Manage the /find command
+  command: "find"
+  usage: "&7Usage: /find <player>"
+  permission: "rsela.command.find"
+  offline-message: "&c%target% &7is offline."
+  online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
+
+Send: # Manage the /send command
+  command: "send"
+  usage: "&7Usage: /send <player/all> <server>"
+  permission: "rsela.command.send"
+  player-offline: "&c%target% &7is offline."
+  invalid-server: "&cInvalid Server: &e%server%"
+  already-in-server: "&c%target% &7is already connected to %server%"
+  sent-player: "&7You have sent &c%target% &7to &e%server%"
+  sent-all: "&7Sending &call of the players &7to &e%server%"
+
+ServerSend: # Manage the /serversend command
+  command: "serversend"
+  usage: "&7Usage: /serversend <server> <server>"
+  permission: "rsela.command.serversend"
+  invalid-server: "&cInvalid Server: &e%server%"
+  same-target: "&cFirst server and Secondary server cannot be the same."
+  sent-players: "&7Sending &e%firstServer% &7players to &e%secondaryServer% &7server."

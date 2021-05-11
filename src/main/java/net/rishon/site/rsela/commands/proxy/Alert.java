@@ -4,8 +4,6 @@ import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
@@ -53,7 +51,6 @@ public class Alert implements Command {
                 if (config.getBoolean("Alert.title-message")) {
                     server.showTitle(title);
                 }
-
                 if (config.getBoolean("Alert.chat-message")) {
                     server.sendMessage(ColorUtil.format(chatMessage));
                 }
@@ -78,7 +75,6 @@ public class Alert implements Command {
                 if (config.getBoolean("Alert.title-message")) {
                     server.showTitle(title);
                 }
-
                 if (config.getBoolean("Alert.chat-message")) {
                     server.sendMessage(ColorUtil.format(chatMessage));
                 }

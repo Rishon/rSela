@@ -1,15 +1,14 @@
 package net.rishon.site.rsela;
 
 import com.google.inject.Inject;
-import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.commands.proxy.Alert;
-import net.rishon.site.rsela.commands.proxy.rSela;
+import net.rishon.site.rsela.commands.proxy.*;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.Globals;
 
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
         id = "rsela",
         name = "rSela",
         version = "1.0.0",
-        description = "An all-in one plugin for a velocity network server.",
+        description = "An all-in one plugin for a Velocity network server.",
         url = "rishon.site",
         authors = {"Rishon"}
 )
@@ -63,6 +62,9 @@ public class Main {
     private void registerCommands() {
         server.getCommandManager().register(new rSela(), "rsela");
         server.getCommandManager().register(new Alert(server), config.getString("Alert.command"));
+        server.getCommandManager().register(new Find(server), config.getString("Find.command"));
+        server.getCommandManager().register(new Send(server), config.getString("Send.command"));
+        server.getCommandManager().register(new ServerSend(server), config.getString("ServerSend.command"));
     }
 
     private void registerListeners() {
