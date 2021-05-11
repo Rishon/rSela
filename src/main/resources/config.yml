@@ -3,18 +3,23 @@
 #              Author: Rishon               #
 #  GitHub: https://github.com/Rishon/rSela  #
 
-version: 1.0.1 # Do not touch!
+version: 1.0.0 # Do not touch!
+
+
+# Server MOTD
+# gradient colors are supported. ex. <yellow> Hello!
+# You can use "\n" to break line.
+MOTD:
+  description: "<gradient:aqua:blue>Amazing Server</gradient>"
 
 # Network Maintenance
 # false = Allowing player connections.
 # true = Blocking player connecting to the server.
+# You can use "\n" to break line.
 Maintenance:
   status: false
   bypass-permission: "rsela.maintenance.bypass"
-  kick-message:
-    - "test1"
-    - "test2"
-    - "test3"
+  kick-message: "&cNetwork Maintenance\n\n&aTry again later."
 
 # Commands #
 Commands:
@@ -64,3 +69,10 @@ Commands:
     invalid-server: "&cInvalid Server: &e%server%"
     same-target: "&cFirst server and Secondary server cannot be the same."
     sent-players: "&7Sending &e%firstServer% &7players to &e%secondaryServer% &7server."
+  IP: # Manage the /ip command
+    enabled: true
+    command: "ip"
+    usage: "&7Usage: /ip <player>"
+    permission: "rsela.command.ip"
+    offline-message: "&c%target% &7is offline."
+    online-message: "&c%target% &7IP-Address is &e%ip%"

@@ -11,6 +11,7 @@ import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.commands.proxy.*;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.listeners.Connections;
+import net.rishon.site.rsela.listeners.ProxyPing;
 import net.rishon.site.rsela.utils.Globals;
 
 import java.nio.file.Path;
@@ -79,10 +80,14 @@ public class Main {
         if (config.getBoolean("Commands.Maintenance.enabled")) {
             server.getCommandManager().register(new Maintenance(), config.getString("Commands.Maintenance.command"));
         }
+        if (config.getBoolean("Commands.IP.enabled")) {
+            server.getCommandManager().register(new IP(server), config.getString("Commands.IP.command"));
+        }
     }
 
     private void registerListeners() {
         server.getEventManager().register(this, new Connections());
+        server.getEventManager().register(this, new ProxyPing());
     }
 
     @Subscribe

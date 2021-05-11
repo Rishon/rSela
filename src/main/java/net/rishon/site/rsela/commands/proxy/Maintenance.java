@@ -2,7 +2,6 @@ package net.rishon.site.rsela.commands.proxy;
 
 import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
@@ -16,15 +15,15 @@ public class Maintenance implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (!source.hasPermission(Globals.rSela_maintenance)) {
-            source.sendMessage(Component.text(Globals.noPermission));
+            source.sendMessage(ColorUtil.format(Globals.noPermission));
             return;
         }
 
         String status = "";
         if (config.getBoolean("Maintenance.status")) {
-            status = "disabled";
-        } else {
             status = "enabled";
+        } else {
+            status = "disabled";
         }
 
         String usageMessage = config.getString("Commands.Maintenance.usage").replace("%status%", status);
