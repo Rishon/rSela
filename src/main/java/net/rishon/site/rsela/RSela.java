@@ -1,0 +1,25 @@
+package net.rishon.site.rsela;
+
+import com.google.inject.Inject;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.plugin.Plugin;
+import org.slf4j.Logger;
+
+@Plugin(
+        id = "rSela",
+        name = "RSela",
+        version = "1.0.0",
+        description = "An all-in one plugin for a velocity network server.",
+        url = "rishon.site",
+        authors = {"Rishon"}
+)
+public class RSela {
+
+    @Inject
+    private Logger logger;
+
+    @Subscribe
+    public void onProxyInitialization(ProxyInitializeEvent event) {
+    }
+}
