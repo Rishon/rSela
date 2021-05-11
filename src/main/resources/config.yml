@@ -5,7 +5,6 @@
 
 version: 1.0.0 # Do not touch!
 
-
 # Server MOTD
 # gradient colors are supported. ex. <yellow> Hello!
 # You can use "\n" to break line.
@@ -76,3 +75,9 @@ Commands:
     permission: "rsela.command.ip"
     offline-message: "&c%target% &7is offline."
     online-message: "&c%target% &7IP-Address is &e%ip%"
+  StaffChat: # Manage the /staffchat command
+    enabled: true
+    command: "staffchat"
+    usage: "&7Usage: /staffchat <message>"
+    permission: "rsela.command.staffchat"
+    staff-format: "&c[STAFF-CHAT] &7| &e%executor% &7(%server%)&8: &a%message%"

@@ -83,6 +83,9 @@ public class Main {
         if (config.getBoolean("Commands.IP.enabled")) {
             server.getCommandManager().register(new IP(server), config.getString("Commands.IP.command"));
         }
+        if (config.getBoolean("Commands.StaffChat.enabled")) {
+            server.getCommandManager().register(new StaffChat(server), config.getString("Commands.StaffChat.command"));
+        }
     }
 
     private void registerListeners() {

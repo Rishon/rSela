@@ -17,6 +17,7 @@ public class Globals {
     public static String rSela_send = config.getString("Commands.Send.permission");
     public static String rSela_serversend = config.getString("Commands.ServerSend.permission");
     public static String rSela_ip = config.getString("Commands.IP.permission");
+    public static String rSela_staffchat = config.getString("Commands.StaffChat.permission");
 
     // MESSAGES
     public static String rSela_prefix = "§8[§brSela§8]§r ";
