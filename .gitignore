@@ -48,6 +48,7 @@ hs_err_pid*
 .AppleDouble
 .LSOverride
 .gitattributes
+.gitignore
 
 # Icon must end with two \r
 Icon
