@@ -9,6 +9,7 @@ check-for-updates: true
 # Commands
 
 Alert: # Manage the /alert command
+  enabled: true
   command: "alert"
   usage: "&7Usage: /alert <message>"
   permission: "rsela.command.alert"
@@ -21,6 +22,7 @@ Alert: # Manage the /alert command
   actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
 
 Find: # Manage the /find command
+  enabled: true
   command: "find"
   usage: "&7Usage: /find <player>"
   permission: "rsela.command.find"
@@ -28,6 +30,7 @@ Find: # Manage the /find command
   online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
 
 Send: # Manage the /send command
+  enabled: true
   command: "send"
   usage: "&7Usage: /send <player/all> <server>"
   permission: "rsela.command.send"
@@ -38,6 +41,7 @@ Send: # Manage the /send command
   sent-all: "&7Sending &call of the players &7to &e%server%"
 
 ServerSend: # Manage the /serversend command
+  enabled: true
   command: "serversend"
   usage: "&7Usage: /serversend <server> <server>"
   permission: "rsela.command.serversend"

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
         id = "rsela",
         name = "rSela",
         version = "1.0.0",
-        description = "An all-in one plugin for a Velocity network server.",
+        description = "Your all-in one plugin for a Velocity network server.",
         url = "rishon.site",
         authors = {"Rishon"}
 )
@@ -61,10 +61,19 @@ public class Main {
 
     private void registerCommands() {
         server.getCommandManager().register(new rSela(), "rsela");
-        server.getCommandManager().register(new Alert(server), config.getString("Alert.command"));
-        server.getCommandManager().register(new Find(server), config.getString("Find.command"));
-        server.getCommandManager().register(new Send(server), config.getString("Send.command"));
-        server.getCommandManager().register(new ServerSend(server), config.getString("ServerSend.command"));
+
+        if (config.getBoolean("Alert.enabled")) {
+            server.getCommandManager().register(new Alert(server), config.getString("Alert.command"));
+        }
+        if (config.getBoolean("Find.enabled")) {
+            server.getCommandManager().register(new Find(server), config.getString("Find.command"));
+        }
+        if (config.getBoolean("Send.enabled")) {
+            server.getCommandManager().register(new Send(server), config.getString("Send.command"));
+        }
+        if (config.getBoolean("ServerSend.enabled")) {
+            server.getCommandManager().register(new ServerSend(server), config.getString("ServerSend.command"));
+        }
     }
 
     private void registerListeners() {
