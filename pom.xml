@@ -13,7 +13,7 @@
 
     <description>An all-in one plugin for a velocity network server.</description>
     <properties>
-        <java.version>1.11</java.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>rishon.site</url>
@@ -26,6 +26,38 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                                <relocation>
+                                    <pattern>net.md_5.bungee.config</pattern>
+                                    <shadedPattern>net.rishon.site.shade.net.md_5.bungee.config</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.md_5.bungee.api.plugin</pattern>
+                                    <shadedPattern>net.rishon.site.shade.net.md_5.bungee.api.plugin</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.yaml</pattern>
+                                    <shadedPattern>net.rishon.site.shade.org.yaml.snakeyaml</shadedPattern>
+                                    <includes>
+                                        <include>org.yaml.**</include>
+                                    </includes>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

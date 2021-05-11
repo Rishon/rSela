@@ -4,7 +4,7 @@ import com.google.common.io.ByteStreams;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import net.rishon.site.rsela.rSela;
+import net.rishon.site.rsela.Main;
 
 import java.io.*;
 
@@ -12,14 +12,14 @@ public class ConfigHandler {
 
     public static File getFile(String resource) {
 
-        File folder = rSela.dataDirectory.toFile();
+        File folder = Main.dataDirectory.toFile();
         if (!folder.exists())
             folder.mkdir();
         File resourceFile = new File(folder, resource);
         try {
             if (!resourceFile.exists()) {
                 resourceFile.createNewFile();
-                try (InputStream in = rSela.class.getClassLoader().getResourceAsStream("config.yml");
+                try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.yml");
                      OutputStream out = new FileOutputStream(resourceFile)) {
                     ByteStreams.copy(in, out);
                 }
@@ -32,7 +32,7 @@ public class ConfigHandler {
 
     public static boolean loadConfig() {
         try {
-            rSela.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
+            Main.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class ConfigHandler {
 
     public boolean saveConfig() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(rSela.config, new File(rSela.dataDirectory.toFile(), "config.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.config, new File(Main.dataDirectory.toFile(), "config.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class ConfigHandler {
     }
 
     public static Configuration getConfig() {
-        return rSela.config;
+        return Main.config;
     }
 
 }

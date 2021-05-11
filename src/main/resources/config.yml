@@ -9,10 +9,11 @@ check-for-updates: true
 Alert: # Manage the /alert command
   command: "alert"
   usage: "&7Usage: /alert"
+  permission:
   chat-message: true
   title-message: true
   actionbar-message: true
-  message: "&e[ALERT] &f%player%&8: &c%message%"
+  message: "&e[ALERT] &f%executor%&8: &c%message%"
   title: "&eALERT"
   subtitle: "&c%message%" # Leave empty for no subtitle.
-  actionbar: "&e[ALERT] &f%player%&8: &c%message%"
+  actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
