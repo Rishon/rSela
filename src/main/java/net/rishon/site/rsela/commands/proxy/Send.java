@@ -30,9 +30,11 @@ public class Send implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Globals.rSela_send)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        if (config.getBoolean("Commands.Send.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_send)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
         if (args.length < 2) {

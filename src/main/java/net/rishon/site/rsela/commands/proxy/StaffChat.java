@@ -22,10 +22,11 @@ public class StaffChat implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-
-        if (!source.hasPermission(Globals.rSela_staffchat)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        if (config.getBoolean("Commands.StaffChat.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_staffchat)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
         if (args.length == 0) {

@@ -14,9 +14,11 @@ public class Maintenance implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Globals.rSela_maintenance)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        if (config.getBoolean("Commands.Maintenance.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_maintenance)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
         String status = "";

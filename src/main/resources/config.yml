@@ -1,9 +1,9 @@
 #                                           #
-#              rSela - v1.0.0               #
+#              rSela - v1.0.1               #
 #              Author: Rishon               #
 #  GitHub: https://github.com/Rishon/rSela  #
 
-version: 1.0.0 # Do not touch!
+version: 1.0.1 # Do not touch!
 
 # Server MOTD
 # gradient colors are supported. ex. <yellow> Hello!
@@ -22,10 +22,22 @@ Maintenance:
 
 # Commands #
 Commands:
+  Message: # Manage the /message command
+    enabled: true
+    command: "message"
+    usage: "&7Usage: /message <player> <message>"
+    require-permission: false
+    permission: "rsela.command.message"
+    message: "&e[ALERT] &f%executor%&8: &c%message%"
+    player-offline: "&c%target% &7is offline."
+    message-format: "&e%sender% &6-> &e%target%&8: &f%message%"
+    aliases:
+      - msg
   Maintenance: # Manage the /maintenance command
     enabled: true
     command: "maintenance"
     usage: "&7Usage: /maintenance <on/off> &8| &7Status: &e%status%"
+    require-permission: true
     permission: "rsela.command.maintenance"
     on-message: "&cMaintenance-mode &7has been &aenabled!"
     off-message: "&cMaintenance-mode &7has been &cdisabled!"
@@ -36,6 +48,7 @@ Commands:
     enabled: true
     command: "alert"
     usage: "&7Usage: /alert <message>"
+    require-permission: true
     permission: "rsela.command.alert"
     chat-message: true
     title-message: true
@@ -49,6 +62,7 @@ Commands:
     enabled: true
     command: "find"
     usage: "&7Usage: /find <player>"
+    require-permission: true
     permission: "rsela.command.find"
     offline-message: "&c%target% &7is offline."
     online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
@@ -57,6 +71,7 @@ Commands:
     enabled: true
     command: "send"
     usage: "&7Usage: /send <player/all> <server>"
+    require-permission: true
     permission: "rsela.command.send"
     player-offline: "&c%target% &7is offline."
     invalid-server: "&cInvalid Server: &e%server%"
@@ -68,6 +83,7 @@ Commands:
     enabled: true
     command: "serversend"
     usage: "&7Usage: /serversend <server> <server>"
+    require-permission: true
     permission: "rsela.command.serversend"
     invalid-server: "&cInvalid Server: &e%server%"
     same-target: "&cFirst server and Secondary server cannot be the same."
@@ -77,6 +93,7 @@ Commands:
     enabled: true
     command: "ip"
     usage: "&7Usage: /ip <player>"
+    require-permission: true
     permission: "rsela.command.ip"
     offline-message: "&c%target% &7is offline."
     online-message: "&c%target% &7IP-Address is &e%ip%"
@@ -85,6 +102,7 @@ Commands:
     enabled: true
     command: "staffchat"
     usage: "&7Usage: /staffchat <message>"
+    require-permission: true
     permission: "rsela.command.staffchat"
     staff-format: "&c[STAFF-CHAT] &7| &e%executor% &7(%server%)&8: &a%message%"
     aliases:

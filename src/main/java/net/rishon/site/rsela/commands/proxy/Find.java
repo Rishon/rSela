@@ -28,9 +28,11 @@ public class Find implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Globals.rSela_find)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        if (config.getBoolean("Commands.Find.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_find)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
         if (args.length == 0) {

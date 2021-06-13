@@ -13,6 +13,7 @@ public class Globals {
     public static String rSela_maintenance = config.getString("Commands.Maintenance.permission");
     public static String rSela_reload = "rsela.command.reload";
     public static String rSela_alert = config.getString("Commands.Alert.permission");
+    public static String rSela_message = config.getString("Commands.Message.permission");
     public static String rSela_find = config.getString("Commands.Find.permission");
     public static String rSela_send = config.getString("Commands.Send.permission");
     public static String rSela_serversend = config.getString("Commands.ServerSend.permission");

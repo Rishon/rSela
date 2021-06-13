@@ -27,10 +27,11 @@ public class IP implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-
-        if (!source.hasPermission(Globals.rSela_ip)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        if (config.getBoolean("Commands.IP.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_ip)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
         if (args.length == 0) {

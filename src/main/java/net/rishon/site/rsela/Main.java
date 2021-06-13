@@ -8,6 +8,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.site.rsela.commands.messages.Message;
 import net.rishon.site.rsela.commands.proxy.*;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.listeners.Connections;
@@ -109,11 +110,17 @@ public class Main {
             }
         }
         if (config.getBoolean("Commands.StaffChat.enabled")) {
-
             server.getCommandManager().register(new StaffChat(server), config.getString("Commands.StaffChat.command"));
             List<String> Aliases = config.getStringList("Commands.StaffChat.aliases");
             for(String cmd : Aliases) {
                 server.getCommandManager().register(new StaffChat(server), cmd);
+            }
+        }
+        if (config.getBoolean("Commands.Message.enabled")) {
+            server.getCommandManager().register(new Message(server), config.getString("Commands.Message.command"));
+            List<String> Aliases = config.getStringList("Commands.Message.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new Message(server), cmd);
             }
         }
     }

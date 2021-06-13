@@ -21,12 +21,15 @@ public class Alert implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Globals.rSela_alert)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
-            return;
+        Configuration config = ConfigHandler.getConfig();
+
+        if (config.getBoolean("Commands.Alert.require-permission")) {
+            if (!source.hasPermission(Globals.rSela_alert)) {
+                source.sendMessage(ColorUtil.format(Globals.noPermission));
+                return;
+            }
         }
 
-        Configuration config = ConfigHandler.getConfig();
 
         if (args.length == 0) {
             source.sendMessage(ColorUtil.format(config.getString("Commands.Alert.usage")));
