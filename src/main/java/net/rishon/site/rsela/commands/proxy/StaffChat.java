@@ -7,7 +7,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 public class StaffChat implements Command {
 
@@ -23,8 +23,8 @@ public class StaffChat implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (config.getBoolean("Commands.StaffChat.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_staffchat)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_staffchat)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }
@@ -44,7 +44,7 @@ public class StaffChat implements Command {
             String staffChatFormat = config.getString("Commands.StaffChat.staff-format").replace("%executor%", "CONSOLE").replace("%message%", message).replace("%server%", "NONE");
 
             for (Player staff : server.getAllPlayers()) {
-                if (staff.hasPermission(Globals.rSela_staffchat)) {
+                if (staff.hasPermission(Permissions.rSela_staffchat)) {
                     staff.sendMessage(ColorUtil.format(staffChatFormat));
                 }
             }
@@ -56,7 +56,7 @@ public class StaffChat implements Command {
             String staffChatFormat = config.getString("Commands.StaffChat.staff-format").replace("%executor%", player.getUsername()).replace("%message%", message).replace("%server%", player.getCurrentServer().get().getServerInfo().getName());
 
             for (Player staff : server.getAllPlayers()) {
-                if (staff.hasPermission(Globals.rSela_staffchat)) {
+                if (staff.hasPermission(Permissions.rSela_staffchat)) {
                     staff.sendMessage(ColorUtil.format(staffChatFormat));
                 }
             }

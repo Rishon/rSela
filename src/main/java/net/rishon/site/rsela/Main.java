@@ -13,7 +13,7 @@ import net.rishon.site.rsela.commands.proxy.*;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.listeners.Connections;
 import net.rishon.site.rsela.listeners.ProxyPing;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -51,7 +51,7 @@ public class Main {
     public void onProxyInitialization(ProxyInitializeEvent event) {
 
         if (!ConfigHandler.loadConfig()) {
-            logger.severe(Globals.rSela_prefix + "An error occurred while attempting to load config.yml");
+            logger.severe(Permissions.rSela_prefix + "An error occurred while attempting to load config.yml");
             server.shutdown();
             return;
         }
@@ -59,8 +59,21 @@ public class Main {
         registerCommands();
         registerListeners();
 
-        logger.info(Globals.rSela_prefix + "Loaded rSela plugin.");
+        logger.info(Permissions.rSela_prefix + "Loaded rSela plugin.");
 
+    }
+
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent e) {
+
+        instance = null;
+
+        logger.info(Permissions.rSela_prefix + "Shutting down rSela...");
+    }
+
+    private void registerListeners() {
+        server.getEventManager().register(this, new Connections());
+        server.getEventManager().register(this, new ProxyPing());
     }
 
     private void registerCommands() {
@@ -123,18 +136,12 @@ public class Main {
                 server.getCommandManager().register(new Message(server), cmd);
             }
         }
-    }
-
-    private void registerListeners() {
-        server.getEventManager().register(this, new Connections());
-        server.getEventManager().register(this, new ProxyPing());
-    }
-
-    @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent e) {
-
-        instance = null;
-
-        logger.info(Globals.rSela_prefix + "Shutting down rSela...");
+        if (config.getBoolean("Commands.ClearChat.enabled")) {
+            server.getCommandManager().register(new ClearChat(server), config.getString("Commands.ClearChat.command"));
+            List<String> Aliases = config.getStringList("Commands.ClearChat.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new ClearChat(server), cmd);
+            }
+        }
     }
 }

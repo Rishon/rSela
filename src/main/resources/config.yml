@@ -20,7 +20,7 @@ Maintenance:
   bypass-permission: "rsela.maintenance.bypass"
   kick-message: "&cNetwork Maintenance\n\n&aTry again later."
 
-# Commands #
+# Commands
 Commands:
   Message: # Manage the /message command
     enabled: true
@@ -28,11 +28,20 @@ Commands:
     usage: "&7Usage: /message <player> <message>"
     require-permission: false
     permission: "rsela.command.message"
-    message: "&e[ALERT] &f%executor%&8: &c%message%"
     player-offline: "&c%target% &7is offline."
     message-format: "&e%sender% &6-> &e%target%&8: &f%message%"
     aliases:
       - msg
+  ClearChat: # Manage the /clearchat command
+    enabled: true
+    command: "clearchat"
+    usage: "&7Usage: /clearchat <server/all>"
+    require-permission: true
+    permission: "rsela.command.clearchat"
+    message: "&b%executor% &fhas cleared the &bchat"
+    aliases:
+      - cc
+      - chatclear
   Maintenance: # Manage the /maintenance command
     enabled: true
     command: "maintenance"

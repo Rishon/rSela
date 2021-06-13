@@ -5,7 +5,7 @@ import com.velocitypowered.api.command.CommandSource;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 public class Maintenance implements Command {
 
@@ -15,8 +15,8 @@ public class Maintenance implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (config.getBoolean("Commands.Maintenance.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_maintenance)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_maintenance)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }

@@ -7,7 +7,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class IP implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (config.getBoolean("Commands.IP.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_ip)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_ip)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }
@@ -55,7 +55,7 @@ public class IP implements Command {
     @Override
     public List<String> suggest(CommandSource source, @NonNull String[] currentArgs) {
         List<String> arg = new ArrayList<>();
-        if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_ip)) {
+        if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_ip)) {
             for (Player player : server.getAllPlayers()) {
                 arg.add(player.getUsername());
             }

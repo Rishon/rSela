@@ -3,7 +3,7 @@ package net.rishon.site.rsela.utils;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 
-public class Globals {
+public class Permissions {
 
     private static final Configuration config = ConfigHandler.getConfig();
 
@@ -15,6 +15,7 @@ public class Globals {
     public static String rSela_alert = config.getString("Commands.Alert.permission");
     public static String rSela_message = config.getString("Commands.Message.permission");
     public static String rSela_find = config.getString("Commands.Find.permission");
+    public static String rSela_clearchat = config.getString("Commands.ClearChat.permission");
     public static String rSela_send = config.getString("Commands.Send.permission");
     public static String rSela_serversend = config.getString("Commands.ServerSend.permission");
     public static String rSela_ip = config.getString("Commands.IP.permission");

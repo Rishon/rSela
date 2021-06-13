@@ -10,7 +10,7 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,8 +31,8 @@ public class Send implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (config.getBoolean("Commands.Send.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_send)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_send)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }
@@ -112,13 +112,13 @@ public class Send implements Command {
         Stream<String> serverFind = server.getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
-        if (currentArgs.length == 0 && source.hasPermission(Globals.rSela_send)) {
+        if (currentArgs.length == 0 && source.hasPermission(Permissions.rSela_send)) {
             return playerFind.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_send)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_send)) {
             return playerFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
-        } else if (currentArgs.length == 2 && source.hasPermission(Globals.rSela_send)) {
+        } else if (currentArgs.length == 2 && source.hasPermission(Permissions.rSela_send)) {
             return serverFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
                     .collect(Collectors.toList());

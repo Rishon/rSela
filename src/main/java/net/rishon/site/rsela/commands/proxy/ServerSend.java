@@ -9,7 +9,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +30,8 @@ public class ServerSend implements Command {
     public void execute(CommandSource source, String[] args) {
 
         if (config.getBoolean("Commands.ServerSend.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_serversend)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_serversend)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }
@@ -81,13 +81,13 @@ public class ServerSend implements Command {
         Stream<String> serverPossibilities = server.getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
-        if (currentArgs.length == 0 && source.hasPermission(Globals.rSela_serversend)) {
+        if (currentArgs.length == 0 && source.hasPermission(Permissions.rSela_serversend)) {
             return serverPossibilities.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_serversend)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_serversend)) {
             return serverPossibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
-        } else if (currentArgs.length == 2 && source.hasPermission(Globals.rSela_serversend)) {
+        } else if (currentArgs.length == 2 && source.hasPermission(Permissions.rSela_serversend)) {
             return serverPossibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
                     .collect(Collectors.toList());

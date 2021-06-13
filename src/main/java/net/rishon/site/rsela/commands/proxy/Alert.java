@@ -8,7 +8,7 @@ import net.kyori.adventure.title.Title;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 public class Alert implements Command {
 
@@ -18,14 +18,14 @@ public class Alert implements Command {
         this.server = server;
     }
 
+    Configuration config = ConfigHandler.getConfig();
+
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        Configuration config = ConfigHandler.getConfig();
-
         if (config.getBoolean("Commands.Alert.require-permission")) {
-            if (!source.hasPermission(Globals.rSela_alert)) {
-                source.sendMessage(ColorUtil.format(Globals.noPermission));
+            if (!source.hasPermission(Permissions.rSela_alert)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
                 return;
             }
         }

@@ -7,7 +7,7 @@ import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 public class Connections {
 
@@ -18,7 +18,7 @@ public class Connections {
 
         Player player = event.getPlayer();
 
-        if (player.hasPermission(Globals.rSela_bypass)) return;
+        if (player.hasPermission(Permissions.rSela_bypass)) return;
 
         if (config.getBoolean("Maintenance.status")) {
             event.setResult(ResultedEvent.ComponentResult.denied(ColorUtil.format(config.getString("Maintenance.kick-message"))));

@@ -7,7 +7,7 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.site.rsela.filemanager.ConfigHandler;
 import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Globals;
+import net.rishon.site.rsela.utils.Permissions;
 
 import java.util.Optional;
 
@@ -19,15 +19,15 @@ public class Message implements Command {
         this.server = server;
     }
 
+    Configuration config = ConfigHandler.getConfig();
+
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Globals.rSela_message)) {
-            source.sendMessage(ColorUtil.format(Globals.noPermission));
+        if (!source.hasPermission(Permissions.rSela_message)) {
+            source.sendMessage(ColorUtil.format(Permissions.noPermission));
             return;
         }
-
-        Configuration config = ConfigHandler.getConfig();
 
         if (args.length <= 1) {
             source.sendMessage(ColorUtil.format(config.getString("Commands.Message.usage")));
