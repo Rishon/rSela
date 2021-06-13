@@ -8,12 +8,12 @@ Your all-in one plugin for a Velocity network server.
 - Many useful commands
 - Customize plugin commands
 - Maintenance mode
-- Messaging system // TO-DO
+- Messaging system ``TO-DO``
 - StaffChat
-- Server Mute // TO-DO 
+- Server Mute ``TO-DO ``
 - Customize server MOTD
-- Player Report Messages // TO-DO
-- MultiLobby // TO-DO
+- Player Report Messages ``TO-DO``
+- MultiLobby ``TO-DO``
 
 
 ## Issues
