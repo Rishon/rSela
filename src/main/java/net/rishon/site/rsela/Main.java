@@ -68,28 +68,51 @@ public class Main {
 
         if (config.getBoolean("Commands.Alert.enabled")) {
             server.getCommandManager().register(new Alert(server), config.getString("Commands.Alert.command"));
+            List<String> Aliases = config.getStringList("Commands.Alert.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new Alert(server), cmd);
+            }
         }
         if (config.getBoolean("Commands.Find.enabled")) {
             server.getCommandManager().register(new Find(server), config.getString("Commands.Find.command"));
+            List<String> Aliases = config.getStringList("Commands.Find.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new Find(server), cmd);
+            }
         }
         if (config.getBoolean("Commands.Send.enabled")) {
             server.getCommandManager().register(new Send(server), config.getString("Commands.Send.command"));
+            List<String> Aliases = config.getStringList("Commands.Send.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new Send(server), cmd);
+            }
         }
         if (config.getBoolean("Commands.ServerSend.enabled")) {
             server.getCommandManager().register(new ServerSend(server), config.getString("Commands.ServerSend.command"));
+            List<String> Aliases = config.getStringList("Commands.ServerSend.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new ServerSend(server), cmd);
+            }
         }
         if (config.getBoolean("Commands.Maintenance.enabled")) {
             server.getCommandManager().register(new Maintenance(), config.getString("Commands.Maintenance.command"));
+            List<String> Aliases = config.getStringList("Commands.Maintenance.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new Maintenance(), cmd);
+            }
         }
         if (config.getBoolean("Commands.IP.enabled")) {
             server.getCommandManager().register(new IP(server), config.getString("Commands.IP.command"));
+            List<String> Aliases = config.getStringList("Commands.IP.aliases");
+            for(String cmd : Aliases) {
+                server.getCommandManager().register(new IP(server), cmd);
+            }
         }
         if (config.getBoolean("Commands.StaffChat.enabled")) {
 
             server.getCommandManager().register(new StaffChat(server), config.getString("Commands.StaffChat.command"));
-
-            List<String> scAliases = config.getStringList("Commands.StaffChat.aliases");
-            for(String cmd : scAliases) {
+            List<String> Aliases = config.getStringList("Commands.StaffChat.aliases");
+            for(String cmd : Aliases) {
                 server.getCommandManager().register(new StaffChat(server), cmd);
             }
         }

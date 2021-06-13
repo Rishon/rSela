@@ -31,6 +31,7 @@ Commands:
     off-message: "&cMaintenance-mode &7has been &cdisabled!"
     already-on-message: "&cMaintenance-mode &7is already enabled."
     already-off-message: "&cMaintenance-mode &7is already disabled."
+    aliases: []
   Alert: # Manage the /alert command
     enabled: true
     command: "alert"
@@ -43,6 +44,7 @@ Commands:
     title: "&eALERT" # Leave empty for no subtitle.
     subtitle: "&c%message%" # Leave empty for no subtitle.
     actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
+    aliases: []
   Find: # Manage the /find command
     enabled: true
     command: "find"
@@ -50,6 +52,7 @@ Commands:
     permission: "rsela.command.find"
     offline-message: "&c%target% &7is offline."
     online-message: "&c%target% &7is online! &8| &7Server: &e%server%"
+    aliases: []
   Send: # Manage the /send command
     enabled: true
     command: "send"
@@ -60,6 +63,7 @@ Commands:
     already-in-server: "&c%target% &7is already connected to %server%"
     sent-player: "&7You have sent &c%target% &7to &e%server%"
     sent-all: "&7Sending &call of the players &7to &e%server%"
+    aliases: []
   ServerSend: # Manage the /serversend command
     enabled: true
     command: "serversend"
@@ -68,6 +72,7 @@ Commands:
     invalid-server: "&cInvalid Server: &e%server%"
     same-target: "&cFirst server and Secondary server cannot be the same."
     sent-players: "&7Sending &e%firstServer% &7players to &e%secondaryServer% &7server."
+    aliases: []
   IP: # Manage the /ip command
     enabled: true
     command: "ip"
@@ -75,6 +80,7 @@ Commands:
     permission: "rsela.command.ip"
     offline-message: "&c%target% &7is offline."
     online-message: "&c%target% &7IP-Address is &e%ip%"
+    aliases: []
   StaffChat: # Manage the /staffchat command
     enabled: true
     command: "staffchat"
@@ -83,4 +89,3 @@ Commands:
     staff-format: "&c[STAFF-CHAT] &7| &e%executor% &7(%server%)&8: &a%message%"
     aliases:
       - sc
-      - hsc
