@@ -24,9 +24,11 @@ public class Message implements Command {
     @Override
     public void execute(CommandSource source, String[] args) {
 
-        if (!source.hasPermission(Permissions.rSela_message)) {
-            source.sendMessage(ColorUtil.format(Permissions.noPermission));
-            return;
+        if (config.getBoolean("Commands.Message.require-permission")) {
+            if (!source.hasPermission(Permissions.rSela_message)) {
+                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+                return;
+            }
         }
 
         if (args.length <= 1) {
@@ -34,11 +36,10 @@ public class Message implements Command {
             return;
         }
 
-
         if (!(source instanceof Player)) {
 
             Optional<Player> target = server.getPlayer(args[0]);
-            if(!target.isPresent()) {
+            if (!target.isPresent()) {
                 String offlineMessage = config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 source.sendMessage(ColorUtil.format(offlineMessage));
                 return;
@@ -59,7 +60,7 @@ public class Message implements Command {
 
             Player player = (Player) source;
             Optional<Player> target = server.getPlayer(args[0]);
-            if(!target.isPresent()) {
+            if (!target.isPresent()) {
                 String offlineMessage = config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 player.sendMessage(ColorUtil.format(offlineMessage));
                 return;
