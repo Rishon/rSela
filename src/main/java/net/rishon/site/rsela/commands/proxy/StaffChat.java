@@ -57,7 +57,6 @@ public class StaffChat implements Command {
             for (Player staff : server.getAllPlayers()) {
                 if (staff.hasPermission(Globals.rSela_staffchat)) {
                     staff.sendMessage(ColorUtil.format(staffChatFormat));
-                    staff.sendMessage(ColorUtil.format(String.valueOf(config.getList("Commands.StaffChat.aliases"))));
                 }
             }
         }

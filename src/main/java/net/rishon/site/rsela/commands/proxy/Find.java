@@ -55,13 +55,11 @@ public class Find implements Command {
     @Override
     public List<String> suggest(CommandSource source, String[] currentArgs) {
 
-        Player player = (Player) source;
-
         Stream<String> possibilities = server.getAllPlayers().stream().map(rs -> rs.getGameProfile().getName());
 
-        if (currentArgs.length == 0 && player.hasPermission(Globals.rSela_find)) {
+        if (currentArgs.length == 0 && source.hasPermission(Globals.rSela_find)) {
             return possibilities.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && player.hasPermission(Globals.rSela_find)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_find)) {
             return possibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());

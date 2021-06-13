@@ -48,13 +48,13 @@ public class Alert implements Command {
 
             for (Player server : server.getAllPlayers()) {
 
-                if (config.getBoolean("Alert.title-message")) {
+                if (config.getBoolean("Commands.Alert.title-message")) {
                     server.showTitle(title);
                 }
-                if (config.getBoolean("Alert.chat-message")) {
+                if (config.getBoolean("Commands.Alert.chat-message")) {
                     server.sendMessage(ColorUtil.format(chatMessage));
                 }
-                if (config.getBoolean("Alert.actionbar-message")) {
+                if (config.getBoolean("Commands.Alert.actionbar-message")) {
                     server.sendActionBar(ColorUtil.format(actionbarMessage));
                 }
             }
@@ -72,13 +72,13 @@ public class Alert implements Command {
 
             for (Player server : server.getAllPlayers()) {
 
-                if (config.getBoolean("Alert.title-message")) {
+                if (config.getBoolean("Commands.Alert.title-message")) {
                     server.showTitle(title);
                 }
-                if (config.getBoolean("Alert.chat-message")) {
+                if (config.getBoolean("Commands.Alert.chat-message")) {
                     server.sendMessage(ColorUtil.format(chatMessage));
                 }
-                if (config.getBoolean("Alert.actionbar-message")) {
+                if (config.getBoolean("Commands.Alert.actionbar-message")) {
                     server.sendActionBar(ColorUtil.format(actionbarMessage));
                 }
             }

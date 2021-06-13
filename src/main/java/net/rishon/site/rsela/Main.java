@@ -15,6 +15,7 @@ import net.rishon.site.rsela.listeners.ProxyPing;
 import net.rishon.site.rsela.utils.Globals;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Plugin(
@@ -84,7 +85,13 @@ public class Main {
             server.getCommandManager().register(new IP(server), config.getString("Commands.IP.command"));
         }
         if (config.getBoolean("Commands.StaffChat.enabled")) {
+
             server.getCommandManager().register(new StaffChat(server), config.getString("Commands.StaffChat.command"));
+
+            List<String> scAliases = config.getStringList("Commands.StaffChat.aliases");
+            for(String cmd : scAliases) {
+                server.getCommandManager().register(new StaffChat(server), cmd);
+            }
         }
     }
 

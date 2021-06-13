@@ -76,18 +76,16 @@ public class ServerSend implements Command {
     @Override
     public List<String> suggest(CommandSource source, String[] currentArgs) {
 
-        Player player = (Player) source;
-
         Stream<String> serverPossibilities = server.getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
-        if (currentArgs.length == 0 && player.hasPermission(Globals.rSela_serversend)) {
+        if (currentArgs.length == 0 && source.hasPermission(Globals.rSela_serversend)) {
             return serverPossibilities.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && player.hasPermission(Globals.rSela_serversend)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_serversend)) {
             return serverPossibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
-        } else if (currentArgs.length == 2 && player.hasPermission(Globals.rSela_serversend)) {
+        } else if (currentArgs.length == 2 && source.hasPermission(Globals.rSela_serversend)) {
             return serverPossibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
                     .collect(Collectors.toList());

@@ -104,21 +104,19 @@ public class Send implements Command {
     @Override
     public List<String> suggest(CommandSource source, String[] currentArgs) {
 
-        Player player = (Player) source;
-
         Stream<String> playerFind = server.getAllPlayers().stream()
                 .map(rs -> rs.getGameProfile().getName());
 
         Stream<String> serverFind = server.getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
-        if (currentArgs.length == 0 && player.hasPermission(Globals.rSela_send)) {
+        if (currentArgs.length == 0 && source.hasPermission(Globals.rSela_send)) {
             return playerFind.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && player.hasPermission(Globals.rSela_send)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(Globals.rSela_send)) {
             return playerFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
-        } else if (currentArgs.length == 2 && player.hasPermission(Globals.rSela_send)) {
+        } else if (currentArgs.length == 2 && source.hasPermission(Globals.rSela_send)) {
             return serverFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
                     .collect(Collectors.toList());

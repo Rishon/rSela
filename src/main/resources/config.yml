@@ -40,7 +40,7 @@ Commands:
     title-message: true
     actionbar-message: true
     message: "&e[ALERT] &f%executor%&8: &c%message%"
-    title: "&eALERT"
+    title: "&eALERT" # Leave empty for no subtitle.
     subtitle: "&c%message%" # Leave empty for no subtitle.
     actionbar: "&e[ALERT] &f%executor%&8: &c%message%"
   Find: # Manage the /find command
@@ -81,3 +81,6 @@ Commands:
     usage: "&7Usage: /staffchat <message>"
     permission: "rsela.command.staffchat"
     staff-format: "&c[STAFF-CHAT] &7| &e%executor% &7(%server%)&8: &a%message%"
+    aliases:
+      - sc
+      - hsc
