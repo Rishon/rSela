@@ -1,7 +1,7 @@
-package net.rishon.site.rsela.utils;
+package net.rishon.codes.rsela.utils;
 
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
 
 public class Permissions {
 
@@ -9,7 +9,7 @@ public class Permissions {
 
     // PERMISSIONS
 
-    public static String rSela_bypass = config.getString("Maintenance.bypass-permission");
+    public static String rSela_maintenance_bypass = config.getString("Maintenance.bypass-permission");
     public static String rSela_maintenance = config.getString("Commands.Maintenance.permission");
     public static String rSela_reload = "rsela.command.reload";
     public static String rSela_alert = config.getString("Commands.Alert.permission");

@@ -1,18 +1,21 @@
-package net.rishon.site.rsela.commands.proxy;
+package net.rishon.codes.rsela.commands.proxy;
 
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Permissions;
+import net.rishon.codes.rsela.utils.ColorUtil;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.utils.Permissions;
 
-public class Maintenance implements Command {
+public class Maintenance implements SimpleCommand {
 
     Configuration config = ConfigHandler.getConfig();
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void execute(final Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Maintenance.require-permission")) {
             if (!source.hasPermission(Permissions.rSela_maintenance)) {
@@ -52,5 +55,11 @@ public class Maintenance implements Command {
             config.set("Maintenance.status", false);
             ConfigHandler.saveConfig();
         }
+    }
+
+    @Override
+    public boolean hasPermission(SimpleCommand.Invocation invocation) {
+        if (!config.getBoolean("Commands.Maintenance.require-permission")) return true;
+        return invocation.source().hasPermission(Permissions.rSela_maintenance);
     }
 }

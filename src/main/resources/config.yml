@@ -1,13 +1,14 @@
 #                                           #
-#              rSela - v1.0.1               #
+#              rSela - v1.0.2               #
 #              Author: Rishon               #
 #  GitHub: https://github.com/Rishon/rSela  #
 
-version: 1.0.1 # Do not touch!
+config-version: 1.2
 
 # Server MOTD
 # gradient colors are supported. ex. <yellow> Hello!
 # You can use "\n" to break line.
+# To learn more head over to: https://docs.adventure.kyori.net/minimessage
 MOTD:
   description: "<gradient:aqua:blue>Amazing Server</gradient>"
 

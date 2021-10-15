@@ -1,4 +1,4 @@
-package net.rishon.site.rsela.listeners;
+package net.rishon.codes.rsela.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyPingEvent;
@@ -6,7 +6,7 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
 
 public class ProxyPing {
 

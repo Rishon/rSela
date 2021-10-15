@@ -1,28 +1,18 @@
-package net.rishon.site.rsela.commands.proxy;
+package net.rishon.codes.rsela.commands.proxy;
 
-import com.google.common.collect.ImmutableList;
-import com.sun.tools.javac.util.StringUtils;
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
-import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.Main;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Permissions;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.utils.ColorUtil;
+import net.rishon.codes.rsela.utils.Permissions;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class ClearChat implements Command {
+public class ClearChat implements SimpleCommand {
 
     private final ProxyServer server;
 
@@ -33,7 +23,10 @@ public class ClearChat implements Command {
     Configuration config = ConfigHandler.getConfig();
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void execute(final Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.ClearChat.require-permission")) {
             if (!source.hasPermission(Permissions.rSela_clearchat)) {
@@ -91,4 +84,11 @@ public class ClearChat implements Command {
             }
         }
     }
+
+    @Override
+    public boolean hasPermission(SimpleCommand.Invocation invocation) {
+        if (!config.getBoolean("Commands.ClearChat.require-permission")) return true;
+        return invocation.source().hasPermission(Permissions.rSela_clearchat);
+    }
+
 }

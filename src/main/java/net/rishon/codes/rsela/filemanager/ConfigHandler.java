@@ -1,10 +1,10 @@
-package net.rishon.site.rsela.filemanager;
+package net.rishon.codes.rsela.filemanager;
 
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import net.rishon.site.rsela.Main;
+import net.rishon.codes.rsela.Main;
 
 import java.io.*;
 

@@ -1,23 +1,23 @@
-package net.rishon.site.rsela.commands.proxy;
+package net.rishon.codes.rsela.commands.proxy;
 
 import com.google.common.collect.ImmutableList;
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Permissions;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.utils.ColorUtil;
+import net.rishon.codes.rsela.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Send implements Command {
+public class Send implements SimpleCommand {
 
     private final ProxyServer server;
 
@@ -28,7 +28,10 @@ public class Send implements Command {
     Configuration config = ConfigHandler.getConfig();
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void execute(final SimpleCommand.Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Send.require-permission")) {
             if (!source.hasPermission(Permissions.rSela_send)) {
@@ -104,7 +107,10 @@ public class Send implements Command {
     }
 
     @Override
-    public List<String> suggest(CommandSource source, String[] currentArgs) {
+    public List<String> suggest(final SimpleCommand.Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] currentArgs = invocation.arguments();
 
         Stream<String> playerFind = server.getAllPlayers().stream()
                 .map(rs -> rs.getGameProfile().getName());
@@ -126,4 +132,11 @@ public class Send implements Command {
             return ImmutableList.of();
         }
     }
+
+    @Override
+    public boolean hasPermission(SimpleCommand.Invocation invocation) {
+        if (!config.getBoolean("Commands.Send.require-permission")) return true;
+        return invocation.source().hasPermission(Permissions.rSela_send);
+    }
+
 }

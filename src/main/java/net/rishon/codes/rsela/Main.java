@@ -1,4 +1,4 @@
-package net.rishon.site.rsela;
+package net.rishon.codes.rsela;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
@@ -8,12 +8,12 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.commands.messages.Message;
-import net.rishon.site.rsela.commands.proxy.*;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.listeners.Connections;
-import net.rishon.site.rsela.listeners.ProxyPing;
-import net.rishon.site.rsela.utils.Permissions;
+import net.rishon.codes.rsela.commands.messages.Message;
+import net.rishon.codes.rsela.commands.proxy.*;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.listeners.Connections;
+import net.rishon.codes.rsela.listeners.ProxyPing;
+import net.rishon.codes.rsela.utils.Permissions;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -22,10 +22,10 @@ import java.util.logging.Logger;
 @Plugin(
         id = "rsela",
         name = "rSela",
-        version = "1.0.0",
+        version = "1.0.2",
         description = "Your all-in one plugin for a Velocity network server.",
-        url = "rishon.site",
-        authors = {"Rishon"}
+        url = "rishon.codes",
+        authors = { "Rishon" }
 )
 public class Main {
 
@@ -78,69 +78,69 @@ public class Main {
 
     private void registerCommands() {
 
-        server.getCommandManager().register(new rSela(), "rsela");
+        server.getCommandManager().register( "rsela", new rSela());
 
         if (config.getBoolean("Commands.Alert.enabled")) {
-            server.getCommandManager().register(new Alert(server), config.getString("Commands.Alert.command"));
+            server.getCommandManager().register(config.getString("Commands.Alert.command"), new Alert(server));
             List<String> Aliases = config.getStringList("Commands.Alert.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new Alert(server), cmd);
+                server.getCommandManager().register(cmd, new Alert(server));
             }
         }
         if (config.getBoolean("Commands.Find.enabled")) {
-            server.getCommandManager().register(new Find(server), config.getString("Commands.Find.command"));
+            server.getCommandManager().register(config.getString("Commands.Find.command"), new Find(server));
             List<String> Aliases = config.getStringList("Commands.Find.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new Find(server), cmd);
+                server.getCommandManager().register(cmd, new Find(server));
             }
         }
         if (config.getBoolean("Commands.Send.enabled")) {
-            server.getCommandManager().register(new Send(server), config.getString("Commands.Send.command"));
+            server.getCommandManager().register(config.getString("Commands.Send.command"), new Send(server));
             List<String> Aliases = config.getStringList("Commands.Send.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new Send(server), cmd);
+                server.getCommandManager().register(cmd, new Send(server));
             }
         }
         if (config.getBoolean("Commands.ServerSend.enabled")) {
-            server.getCommandManager().register(new ServerSend(server), config.getString("Commands.ServerSend.command"));
+            server.getCommandManager().register(config.getString("Commands.ServerSend.command"), new ServerSend(server));
             List<String> Aliases = config.getStringList("Commands.ServerSend.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new ServerSend(server), cmd);
+                server.getCommandManager().register(cmd, new ServerSend(server));
             }
         }
         if (config.getBoolean("Commands.Maintenance.enabled")) {
-            server.getCommandManager().register(new Maintenance(), config.getString("Commands.Maintenance.command"));
+            server.getCommandManager().register(config.getString("Commands.Maintenance.command"), new Maintenance());
             List<String> Aliases = config.getStringList("Commands.Maintenance.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new Maintenance(), cmd);
+                server.getCommandManager().register(cmd, new Maintenance());
             }
         }
         if (config.getBoolean("Commands.IP.enabled")) {
-            server.getCommandManager().register(new IP(server), config.getString("Commands.IP.command"));
+            server.getCommandManager().register(config.getString("Commands.IP.command"), new IP(server));
             List<String> Aliases = config.getStringList("Commands.IP.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new IP(server), cmd);
+                server.getCommandManager().register(cmd, new IP(server));
             }
         }
         if (config.getBoolean("Commands.StaffChat.enabled")) {
-            server.getCommandManager().register(new StaffChat(server), config.getString("Commands.StaffChat.command"));
+            server.getCommandManager().register(config.getString("Commands.StaffChat.command"), new StaffChat(server));
             List<String> Aliases = config.getStringList("Commands.StaffChat.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new StaffChat(server), cmd);
+                server.getCommandManager().register(cmd, new StaffChat(server));
             }
         }
         if (config.getBoolean("Commands.Message.enabled")) {
-            server.getCommandManager().register(new Message(server), config.getString("Commands.Message.command"));
+            server.getCommandManager().register(config.getString("Commands.Message.command"), new Message(server));
             List<String> Aliases = config.getStringList("Commands.Message.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new Message(server), cmd);
+                server.getCommandManager().register(cmd, new Message(server));
             }
         }
         if (config.getBoolean("Commands.ClearChat.enabled")) {
-            server.getCommandManager().register(new ClearChat(server), config.getString("Commands.ClearChat.command"));
+            server.getCommandManager().register(config.getString("Commands.ClearChat.command"), new ClearChat(server));
             List<String> Aliases = config.getStringList("Commands.ClearChat.aliases");
             for(String cmd : Aliases) {
-                server.getCommandManager().register(new ClearChat(server), cmd);
+                server.getCommandManager().register(cmd, new ClearChat(server));
             }
         }
     }

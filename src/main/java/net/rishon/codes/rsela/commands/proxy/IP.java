@@ -1,20 +1,19 @@
-package net.rishon.site.rsela.commands.proxy;
+package net.rishon.codes.rsela.commands.proxy;
 
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Permissions;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.utils.ColorUtil;
+import net.rishon.codes.rsela.utils.Permissions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class IP implements Command {
+public class IP implements SimpleCommand {
 
     private final ProxyServer server;
 
@@ -25,7 +24,10 @@ public class IP implements Command {
     Configuration config = ConfigHandler.getConfig();
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void execute(final Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.IP.require-permission")) {
             if (!source.hasPermission(Permissions.rSela_ip)) {
@@ -53,8 +55,12 @@ public class IP implements Command {
     }
 
     @Override
-    public List<String> suggest(CommandSource source, @NonNull String[] currentArgs) {
+    public List<String> suggest(final SimpleCommand.Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] currentArgs = invocation.arguments();
         List<String> arg = new ArrayList<>();
+
         if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_ip)) {
             for (Player player : server.getAllPlayers()) {
                 arg.add(player.getUsername());

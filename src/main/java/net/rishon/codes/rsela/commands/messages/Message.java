@@ -1,17 +1,17 @@
-package net.rishon.site.rsela.commands.messages;
+package net.rishon.codes.rsela.commands.messages;
 
-import com.velocitypowered.api.command.Command;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.site.rsela.filemanager.ConfigHandler;
-import net.rishon.site.rsela.utils.ColorUtil;
-import net.rishon.site.rsela.utils.Permissions;
+import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.utils.ColorUtil;
+import net.rishon.codes.rsela.utils.Permissions;
 
 import java.util.Optional;
 
-public class Message implements Command {
+public class Message implements SimpleCommand {
 
     private final ProxyServer server;
 
@@ -22,7 +22,10 @@ public class Message implements Command {
     Configuration config = ConfigHandler.getConfig();
 
     @Override
-    public void execute(CommandSource source, String[] args) {
+    public void execute(final Invocation invocation) {
+
+        CommandSource source = invocation.source();
+        String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Message.require-permission")) {
             if (!source.hasPermission(Permissions.rSela_message)) {
@@ -78,5 +81,11 @@ public class Message implements Command {
             player.sendMessage(ColorUtil.format(msg));
 
         }
+    }
+
+    @Override
+    public boolean hasPermission(SimpleCommand.Invocation invocation) {
+        if (!config.getBoolean("Commands.Message.require-permission")) return true;
+        return invocation.source().hasPermission(Permissions.rSela_message);
     }
 }

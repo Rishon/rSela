@@ -1,4 +1,4 @@
-package net.rishon.site.rsela.utils;
+package net.rishon.codes.rsela.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
