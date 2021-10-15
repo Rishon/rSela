@@ -5,6 +5,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.codes.rsela.filemanager.DataHandler;
 import net.rishon.codes.rsela.filemanager.FileHandler;
 import net.rishon.codes.rsela.utils.ColorUtil;
 import net.rishon.codes.rsela.utils.Permissions;
@@ -70,6 +71,14 @@ public class Message implements SimpleCommand {
             }
 
             Player onlineTarget = target.get();
+            DataHandler dataHandler = new DataHandler(onlineTarget.getUniqueId());
+
+            if(dataHandler.getTPM() && !player.hasPermission(Permissions.rSela_messagetoggle_bypass)) {
+                String blocked_pm = config.getString("Commands.MessageToggle.send-fail").replace("%target%", onlineTarget.getUsername());
+                player.sendMessage(ColorUtil.format(blocked_pm));
+                return;
+            }
+
 
             StringBuilder message = new StringBuilder();
             for (int i = 1; i < args.length; i++) {

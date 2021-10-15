@@ -75,6 +75,7 @@ public class Main {
     public void onProxyShutdown(ProxyShutdownEvent e) {
 
         data.set("toggled_messages", Lists.toggled_messages);
+        FileHandler.saveData();
 
         instance = null;
 
