@@ -4,12 +4,12 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.FileHandler;
 import net.rishon.codes.rsela.utils.Permissions;
 
 public class Maintenance implements SimpleCommand {
 
-    Configuration config = ConfigHandler.getConfig();
+    Configuration config = FileHandler.getConfig();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -45,7 +45,7 @@ public class Maintenance implements SimpleCommand {
             }
             source.sendMessage(ColorUtil.format(config.getString("Commands.Maintenance.on-message")));
             config.set("Maintenance.status", true);
-            ConfigHandler.saveConfig();
+            FileHandler.saveConfig();
         } else if (args[0].equalsIgnoreCase("off")) {
             if (!config.getBoolean("Maintenance.status")) {
                 source.sendMessage(ColorUtil.format(config.getString("Commands.Maintenance.already-off-message")));
@@ -53,7 +53,7 @@ public class Maintenance implements SimpleCommand {
             }
             source.sendMessage(ColorUtil.format(config.getString("Commands.Maintenance.off-message")));
             config.set("Maintenance.status", false);
-            ConfigHandler.saveConfig();
+            FileHandler.saveConfig();
         }
     }
 

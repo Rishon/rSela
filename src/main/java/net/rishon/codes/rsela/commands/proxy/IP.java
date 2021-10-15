@@ -5,7 +5,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.FileHandler;
 import net.rishon.codes.rsela.utils.ColorUtil;
 import net.rishon.codes.rsela.utils.Permissions;
 
@@ -21,7 +21,7 @@ public class IP implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = ConfigHandler.getConfig();
+    Configuration config = FileHandler.getConfig();
 
     @Override
     public void execute(final Invocation invocation) {

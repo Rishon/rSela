@@ -6,13 +6,13 @@ import com.velocitypowered.api.proxy.server.ServerPing;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.FileHandler;
 
 public class ProxyPing {
 
     private final MiniMessage miniMessage = MiniMessage.get();
 
-    Configuration config = ConfigHandler.getConfig();
+    Configuration config = FileHandler.getConfig();
 
     @Subscribe
     public void serverPing(ProxyPingEvent event) {

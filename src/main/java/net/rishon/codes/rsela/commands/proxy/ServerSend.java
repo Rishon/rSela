@@ -9,7 +9,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.rsela.utils.ColorUtil;
 import net.rishon.codes.rsela.utils.Permissions;
-import net.rishon.codes.rsela.filemanager.ConfigHandler;
+import net.rishon.codes.rsela.filemanager.FileHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +24,7 @@ public class ServerSend implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = ConfigHandler.getConfig();
+    Configuration config = FileHandler.getConfig();
 
     @Override
     public void execute(final SimpleCommand.Invocation invocation) {

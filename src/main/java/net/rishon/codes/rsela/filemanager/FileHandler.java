@@ -8,7 +8,7 @@ import net.rishon.codes.rsela.Main;
 
 import java.io.*;
 
-public class ConfigHandler {
+public class FileHandler {
 
     public static File getFile(String resource) {
 
@@ -19,9 +19,16 @@ public class ConfigHandler {
         try {
             if (!resourceFile.exists()) {
                 resourceFile.createNewFile();
-                try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.yml");
-                     OutputStream out = new FileOutputStream(resourceFile)) {
-                    ByteStreams.copy(in, out);
+                if (resource.equalsIgnoreCase("config.yml")) {
+                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.yml");
+                         OutputStream out = new FileOutputStream(resourceFile)) {
+                        ByteStreams.copy(in, out);
+                    }
+                } else if (resource.equalsIgnoreCase("data.yml")) {
+                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("data.yml");
+                         OutputStream out = new FileOutputStream(resourceFile)) {
+                        ByteStreams.copy(in, out);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -29,6 +36,8 @@ public class ConfigHandler {
         }
         return resourceFile;
     }
+
+    // Config File
 
     public static boolean loadConfig() {
         try {
@@ -52,6 +61,32 @@ public class ConfigHandler {
 
     public static Configuration getConfig() {
         return Main.config;
+    }
+
+    // Data file
+
+    public static boolean loadData() {
+        try {
+            Main.data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean saveData() {
+        try {
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.data, new File(Main.dataDirectory.toFile(), "data.yml"));
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static Configuration getData() {
+        return Main.data;
     }
 
 }

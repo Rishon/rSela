@@ -3,6 +3,7 @@
 #              Author: Rishon               #
 #  GitHub: https://github.com/Rishon/rSela  #
 
+version: 1.0.2
 config-version: 1.2
 
 # Server MOTD
@@ -21,6 +22,20 @@ Maintenance:
   bypass-permission: "rsela.maintenance.bypass"
   kick-message: "&cNetwork Maintenance\n\n&aTry again later."
 
+
+# Player Data
+# storage-methods: yaml, sqlite (not available), mysql (not available)
+storage-method:
+  type: yaml
+  mysql:
+    host: 127.0.0.1
+    port: 3306
+    database: db_name
+    username: db_username
+    password: db_password
+    table: rsela_data
+
+
 # Commands
 Commands:
   Message: # Manage the /message command
@@ -33,6 +48,18 @@ Commands:
     message-format: "&e%sender% &6-> &e%target%&8: &f%message%"
     aliases:
       - msg
+  MessageToggle: # Manage the /messagetoggle command
+    enabled: true
+    command: "messagetoggle"
+    require-permission: false
+    permission: "rsela.command.messagetoggle"
+    bypass-permission: "rsela.command.messagetoggle.bypass"
+    toggled-on: "&eYou have opened your private messages."
+    toggled-off: "&eYou have closed your private messages."
+    aliases:
+      - tpm
+      - togglemessage
+      - msgtoggle
   ClearChat: # Manage the /clearchat command
     enabled: true
     command: "clearchat"
@@ -117,3 +144,18 @@ Commands:
     staff-format: "&c[STAFF-CHAT] &7| &e%executor% &7(%server%)&8: &a%message%"
     aliases:
       - sc
+  MuteServer: # Manage the /muteserver command
+    enabled: true
+    command: "muteserver"
+    require-permission: true
+    permission: "rsela.command.muteserver"
+    bypass-permission: "rsela.command.muteserver.bypass"
+    chat-notify: true
+    muted-message: "&aYou have successfully muted server chat in &8(&c%server%&8)."
+    un-muted-message: "&aYou have successfully un-muted server chat in &8(&c%server%&8)."
+    chat-muted-msg: "&e%executor% has muted server chat."
+    chat-un-muted-msg: "&e%executor% has un-muted server chat."
+    muted-chat: "&cServer chat is currently muted, you may not speak."
+    aliases:
+      - servermute
+      - silenceserver
