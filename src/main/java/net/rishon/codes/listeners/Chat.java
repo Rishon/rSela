@@ -4,6 +4,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.codes.Main;
 import net.rishon.codes.filemanager.FileHandler;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Lists;
@@ -11,7 +12,7 @@ import net.rishon.codes.utils.Permissions;
 
 public class Chat {
 
-    private final Configuration config = FileHandler.getConfig();
+    private final Configuration config = Main.getInstance().config;
     private final Permissions permissions = new Permissions();
 
     @Subscribe
@@ -22,7 +23,7 @@ public class Chat {
         if (!player.hasPermission(permissions.rSela_muteserver_bypass)) {
             if (Lists.mutedServers.contains(player.getCurrentServer().get().getServerInfo().getName())) {
                 event.setResult(PlayerChatEvent.ChatResult.denied());
-                player.sendMessage(ColorUtil.format(config.getString("Commands.MuteServer.muted-chat")));
+                player.sendMessage(ColorUtil.format(this.config.getString("Commands.MuteServer.muted-chat")));
             }
         }
     }

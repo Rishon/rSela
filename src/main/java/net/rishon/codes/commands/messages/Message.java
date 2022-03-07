@@ -5,8 +5,8 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.codes.Main;
 import net.rishon.codes.filemanager.DataHandler;
-import net.rishon.codes.filemanager.FileHandler;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Permissions;
 
@@ -15,13 +15,11 @@ import java.util.Optional;
 public class Message implements SimpleCommand {
 
     private final ProxyServer server;
-
+    private final Configuration config = Main.getInstance().config;
+    private final Permissions permissions = new Permissions();
     public Message(ProxyServer server) {
         this.server = server;
     }
-
-    private final Configuration config = FileHandler.getConfig();
-    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -29,7 +27,7 @@ public class Message implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if (config.getBoolean("Commands.Message.require-permission")) {
+        if (this.config.getBoolean("Commands.Message.require-permission")) {
             if (!source.hasPermission(permissions.rSela_message)) {
                 source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
@@ -37,7 +35,7 @@ public class Message implements SimpleCommand {
         }
 
         if (args.length <= 1) {
-            source.sendMessage(ColorUtil.format(config.getString("Commands.Message.usage")));
+            source.sendMessage(ColorUtil.format(this.config.getString("Commands.Message.usage")));
             return;
         }
 
@@ -45,7 +43,7 @@ public class Message implements SimpleCommand {
 
             Optional<Player> target = server.getPlayer(args[0]);
             if (!target.isPresent()) {
-                String offlineMessage = config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
+                String offlineMessage = this.config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 source.sendMessage(ColorUtil.format(offlineMessage));
                 return;
             }
@@ -57,7 +55,7 @@ public class Message implements SimpleCommand {
                 message.append(args[i]).append(" ");
             }
 
-            String msg = config.getString("Commands.Message.message-format").replace("%message%", message).replace("%sender%", "CONSOLE").replace("%target%", onlineTarget.getUsername());
+            String msg = this.config.getString("Commands.Message.message-format").replace("%message%", message).replace("%sender%", "CONSOLE").replace("%target%", onlineTarget.getUsername());
             onlineTarget.sendMessage(ColorUtil.format(msg));
             source.sendMessage(ColorUtil.format(msg));
 
@@ -66,7 +64,7 @@ public class Message implements SimpleCommand {
             Player player = (Player) source;
             Optional<Player> target = server.getPlayer(args[0]);
             if (!target.isPresent()) {
-                String offlineMessage = config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
+                String offlineMessage = this.config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 player.sendMessage(ColorUtil.format(offlineMessage));
                 return;
             }
@@ -75,7 +73,7 @@ public class Message implements SimpleCommand {
             DataHandler dataHandler = new DataHandler(onlineTarget.getUniqueId());
 
             if (dataHandler.getTPM() && !player.hasPermission(permissions.rSela_messagetoggle_bypass)) {
-                String blocked_pm = config.getString("Commands.MessageToggle.send-fail").replace("%target%", onlineTarget.getUsername());
+                String blocked_pm = this.config.getString("Commands.MessageToggle.send-fail").replace("%target%", onlineTarget.getUsername());
                 player.sendMessage(ColorUtil.format(blocked_pm));
                 return;
             }
@@ -86,7 +84,7 @@ public class Message implements SimpleCommand {
                 message.append(args[i]).append(" ");
             }
 
-            String msg = config.getString("Commands.Message.message-format").replace("%message%", message).replace("%sender%", player.getUsername()).replace("%target%", onlineTarget.getUsername());
+            String msg = this.config.getString("Commands.Message.message-format").replace("%message%", message).replace("%sender%", player.getUsername()).replace("%target%", onlineTarget.getUsername());
             onlineTarget.sendMessage(ColorUtil.format(msg));
             player.sendMessage(ColorUtil.format(msg));
 
@@ -95,7 +93,7 @@ public class Message implements SimpleCommand {
 
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
-        if (!config.getBoolean("Commands.Message.require-permission")) return true;
+        if (!this.config.getBoolean("Commands.Message.require-permission")) return true;
         return invocation.source().hasPermission(permissions.rSela_message);
     }
 }

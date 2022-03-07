@@ -7,9 +7,9 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Permissions;
-import net.rishon.codes.filemanager.FileHandler;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +19,12 @@ import java.util.stream.Stream;
 public class ServerSend implements SimpleCommand {
 
     private final ProxyServer server;
+    private final Configuration config = Main.getInstance().config;
+    private final Permissions permissions = new Permissions();
 
     public ServerSend(ProxyServer server) {
         this.server = server;
     }
-
-    private final Configuration config = FileHandler.getConfig();
-    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final SimpleCommand.Invocation invocation) {
@@ -33,7 +32,7 @@ public class ServerSend implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if (config.getBoolean("Commands.ServerSend.require-permission")) {
+        if (this.config.getBoolean("Commands.ServerSend.require-permission")) {
             if (!source.hasPermission(permissions.rSela_serversend)) {
                 source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
@@ -41,11 +40,11 @@ public class ServerSend implements SimpleCommand {
         }
 
         if (args.length < 2) {
-            source.sendMessage(ColorUtil.format(config.getString("Commands.ServerSend.usage")));
+            source.sendMessage(ColorUtil.format(this.config.getString("Commands.ServerSend.usage")));
             return;
         }
 
-        String invalidFirst = config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[0]);
+        String invalidFirst = this.config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[0]);
 
         Optional<RegisteredServer> serverFrom = server.getServer(args[0]);
         if (!serverFrom.isPresent()) {
@@ -53,7 +52,7 @@ public class ServerSend implements SimpleCommand {
             return;
         }
 
-        String invalidSecondary = config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[1]);
+        String invalidSecondary = this.config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[1]);
 
         Optional<RegisteredServer> serverTo = server.getServer(args[1]);
         if (!serverTo.isPresent()) {
@@ -62,11 +61,11 @@ public class ServerSend implements SimpleCommand {
         }
 
         if (serverFrom == serverTo) {
-            source.sendMessage(ColorUtil.format(config.getString("Commands.ServerSend.same-target")));
+            source.sendMessage(ColorUtil.format(this.config.getString("Commands.ServerSend.same-target")));
             return;
         }
 
-        String sentPlayers = config.getString("Commands.ServerSend.sent-players").replace("%firstServer%", args[0]).replace("%secondaryServer%", args[1]);
+        String sentPlayers = this.config.getString("Commands.ServerSend.sent-players").replace("%firstServer%", args[0]).replace("%secondaryServer%", args[1]);
 
         for (Player target : serverFrom.get().getPlayersConnected()) {
             Optional<RegisteredServer> connection = server.getServer(args[1]);
@@ -105,7 +104,7 @@ public class ServerSend implements SimpleCommand {
 
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
-        if (!config.getBoolean("Commands.ServerSend.require-permission")) return true;
+        if (!this.config.getBoolean("Commands.ServerSend.require-permission")) return true;
         return invocation.source().hasPermission(permissions.rSela_serversend);
     }
 

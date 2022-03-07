@@ -12,16 +12,16 @@ public class DataHandler {
         this.uuid = uuid;
     }
 
+    public boolean getTPM() {
+        return Lists.toggled_messages.contains(getUUID().toString());
+    }
+
     public void setTPM(boolean value) {
         if (value && !getTPM()) {
             Lists.toggled_messages.add(getUUID().toString());
         } else if (!value && getTPM()) {
             Lists.toggled_messages.remove(getUUID().toString());
         }
-    }
-
-    public boolean getTPM() {
-        return Lists.toggled_messages.contains(getUUID().toString());
     }
 
     public UUID getUUID() {

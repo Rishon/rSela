@@ -11,13 +11,13 @@ import java.nio.file.Path;
 
 public class FileHandler {
 
-    private static Path directory;
+    private final Path directory;
 
     public FileHandler(Path directory) {
         this.directory = directory;
     }
 
-    private static File getFile(String resource) {
+    private File getFile(String resource) {
 
         File folder = directory.toFile();
         if (!folder.exists()) folder.mkdir();
@@ -44,9 +44,9 @@ public class FileHandler {
 
     // Config File
 
-    public static boolean loadConfig() {
+    public boolean loadConfig() {
         try {
-            Main.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
+            Main.getInstance().config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,25 +54,23 @@ public class FileHandler {
         }
     }
 
-    public static boolean saveConfig() {
+    public void saveConfig() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.config, new File(directory.toFile(), "config.yml"));
-            return true;
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.getInstance().config, new File(directory.toFile(), "config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
-    public static Configuration getConfig() {
-        return Main.config;
+    public Configuration getConfig() {
+        return Main.getInstance().config;
     }
 
     // Data file
 
-    public static boolean loadData() {
+    public boolean loadData() {
         try {
-            Main.data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
+            Main.getInstance().data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,18 +78,16 @@ public class FileHandler {
         }
     }
 
-    public static boolean saveData() {
+    public void saveData() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.data, new File(directory.toFile(), "data.yml"));
-            return true;
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.getInstance().data, new File(directory.toFile(), "data.yml"));
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
-    public static Configuration getData() {
-        return Main.data;
+    public Configuration getData() {
+        return Main.getInstance().data;
     }
 
 }

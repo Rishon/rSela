@@ -6,7 +6,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Permissions;
 
@@ -15,13 +15,12 @@ import java.util.Collection;
 public class ClearChat implements SimpleCommand {
 
     private final ProxyServer server;
+    private final Configuration config = Main.getInstance().config;
+    private final Permissions permissions = new Permissions();
 
     public ClearChat(ProxyServer server) {
         this.server = server;
     }
-
-    private final Configuration config = FileHandler.getConfig();
-    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -29,7 +28,7 @@ public class ClearChat implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if (config.getBoolean("Commands.ClearChat.require-permission")) {
+        if (this.config.getBoolean("Commands.ClearChat.require-permission")) {
             if (!source.hasPermission(permissions.rSela_clearchat)) {
                 source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
@@ -37,12 +36,12 @@ public class ClearChat implements SimpleCommand {
         }
 
         if (args.length == 0) {
-            source.sendMessage(ColorUtil.format(config.getString("Commands.ClearChat.usage")));
+            source.sendMessage(ColorUtil.format(this.config.getString("Commands.ClearChat.usage")));
             return;
         }
 
         if (!(source instanceof Player)) {
-            String clearedMsg = config.getString("Commands.ClearChat.message").replace("%executor%", "CONSOLE");
+            String clearedMsg = this.config.getString("Commands.ClearChat.message").replace("%executor%", "CONSOLE");
 
             if (args[0].equalsIgnoreCase("all")) {
                 for (Player network : server.getAllPlayers()) {
@@ -60,7 +59,7 @@ public class ClearChat implements SimpleCommand {
 
             Player player = (Player) source;
 
-            String clearedMsg = config.getString("Commands.ClearChat.message").replace("%executor%", player.getUsername());
+            String clearedMsg = this.config.getString("Commands.ClearChat.message").replace("%executor%", player.getUsername());
 
             if (args[0].equalsIgnoreCase("all")) {
 
@@ -88,7 +87,7 @@ public class ClearChat implements SimpleCommand {
 
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
-        if (!config.getBoolean("Commands.ClearChat.require-permission")) return true;
+        if (!this.config.getBoolean("Commands.ClearChat.require-permission")) return true;
         return invocation.source().hasPermission(permissions.rSela_clearchat);
     }
 

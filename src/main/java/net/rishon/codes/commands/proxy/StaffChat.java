@@ -5,6 +5,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
+import net.rishon.codes.Main;
 import net.rishon.codes.filemanager.FileHandler;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Permissions;
@@ -12,13 +13,11 @@ import net.rishon.codes.utils.Permissions;
 public class StaffChat implements SimpleCommand {
 
     private final ProxyServer server;
-
+    private final Configuration config = Main.getInstance().config;
+    private final Permissions permissions = new Permissions();
     public StaffChat(ProxyServer server) {
         this.server = server;
     }
-
-    private final Configuration config = FileHandler.getConfig();
-    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final SimpleCommand.Invocation invocation) {
@@ -26,7 +25,7 @@ public class StaffChat implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] args = invocation.arguments();
 
-        if (config.getBoolean("Commands.StaffChat.require-permission")) {
+        if (this.config.getBoolean("Commands.StaffChat.require-permission")) {
             if (!source.hasPermission(permissions.rSela_staffchat)) {
                 source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
@@ -34,7 +33,7 @@ public class StaffChat implements SimpleCommand {
         }
 
         if (args.length == 0) {
-            source.sendMessage(ColorUtil.format(config.getString("Commands.StaffChat.usage")));
+            source.sendMessage(ColorUtil.format(this.config.getString("Commands.StaffChat.usage")));
             return;
         }
 
@@ -45,7 +44,7 @@ public class StaffChat implements SimpleCommand {
 
         if (!(source instanceof Player)) {
 
-            String staffChatFormat = config.getString("Commands.StaffChat.staff-format").replace("%executor%", "CONSOLE").replace("%message%", message).replace("%server%", "NONE");
+            String staffChatFormat = this.config.getString("Commands.StaffChat.staff-format").replace("%executor%", "CONSOLE").replace("%message%", message).replace("%server%", "NONE");
 
             for (Player staff : server.getAllPlayers()) {
                 if (staff.hasPermission(permissions.rSela_staffchat)) {
@@ -57,7 +56,7 @@ public class StaffChat implements SimpleCommand {
 
             Player player = (Player) source;
 
-            String staffChatFormat = config.getString("Commands.StaffChat.staff-format").replace("%executor%", player.getUsername()).replace("%message%", message).replace("%server%", player.getCurrentServer().get().getServerInfo().getName());
+            String staffChatFormat = this.config.getString("Commands.StaffChat.staff-format").replace("%executor%", player.getUsername()).replace("%message%", message).replace("%server%", player.getCurrentServer().get().getServerInfo().getName());
 
             for (Player staff : server.getAllPlayers()) {
                 if (staff.hasPermission(permissions.rSela_staffchat)) {
@@ -69,7 +68,7 @@ public class StaffChat implements SimpleCommand {
 
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
-        if (!config.getBoolean("Commands.StaffChat.require-permission")) return true;
+        if (!this.config.getBoolean("Commands.StaffChat.require-permission")) return true;
         return invocation.source().hasPermission(permissions.rSela_staffchat);
     }
 }
