@@ -1,32 +1,37 @@
-package net.rishon.codes.rsela.filemanager;
+package net.rishon.codes.filemanager;
 
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import net.rishon.codes.rsela.Main;
+import net.rishon.codes.Main;
 
 import java.io.*;
+import java.nio.file.Path;
 
 public class FileHandler {
 
-    public static File getFile(String resource) {
+    private static Path directory;
 
-        File folder = Main.dataDirectory.toFile();
-        if (!folder.exists())
-            folder.mkdir();
+    public FileHandler(Path directory) {
+        this.directory = directory;
+    }
+
+    private static File getFile(String resource) {
+
+        File folder = directory.toFile();
+        if (!folder.exists()) folder.mkdir();
         File resourceFile = new File(folder, resource);
         try {
             if (!resourceFile.exists()) {
                 resourceFile.createNewFile();
                 if (resource.equalsIgnoreCase("config.yml")) {
-                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.yml");
-                         OutputStream out = new FileOutputStream(resourceFile)) {
+                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("config.yml"); OutputStream out = new FileOutputStream(resourceFile)) {
                         ByteStreams.copy(in, out);
                     }
-                } else if (resource.equalsIgnoreCase("data.yml")) {
-                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("data.yml");
-                         OutputStream out = new FileOutputStream(resourceFile)) {
+                }
+                if (resource.equalsIgnoreCase("data.yml")) {
+                    try (InputStream in = Main.class.getClassLoader().getResourceAsStream("data.yml"); OutputStream out = new FileOutputStream(resourceFile)) {
                         ByteStreams.copy(in, out);
                     }
                 }
@@ -51,7 +56,7 @@ public class FileHandler {
 
     public static boolean saveConfig() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.config, new File(Main.dataDirectory.toFile(), "config.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.config, new File(directory.toFile(), "config.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,7 +82,7 @@ public class FileHandler {
 
     public static boolean saveData() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.data, new File(Main.dataDirectory.toFile(), "data.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.data, new File(directory.toFile(), "data.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();

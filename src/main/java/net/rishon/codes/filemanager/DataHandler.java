@@ -1,6 +1,6 @@
-package net.rishon.codes.rsela.filemanager;
+package net.rishon.codes.filemanager;
 
-import net.rishon.codes.rsela.utils.Lists;
+import net.rishon.codes.utils.Lists;
 
 import java.util.UUID;
 
@@ -13,9 +13,9 @@ public class DataHandler {
     }
 
     public void setTPM(boolean value) {
-        if(value && !getTPM()) {
+        if (value && !getTPM()) {
             Lists.toggled_messages.add(getUUID().toString());
-        } else if(!value && getTPM()) {
+        } else if (!value && getTPM()) {
             Lists.toggled_messages.remove(getUUID().toString());
         }
     }

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.rishon.site</groupId>
+    <groupId>net.rishon.codes</groupId>
     <artifactId>rSela</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>rSela</name>
@@ -40,15 +40,15 @@
                             <relocations>
                                 <relocation>
                                     <pattern>net.md_5.bungee.config</pattern>
-                                    <shadedPattern>net.rishon.site.shade.net.md_5.bungee.config</shadedPattern>
+                                    <shadedPattern>net.rishon.codes.shade.net.md_5.bungee.config</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>net.md_5.bungee.api.plugin</pattern>
-                                    <shadedPattern>net.rishon.site.shade.net.md_5.bungee.api.plugin</shadedPattern>
+                                    <shadedPattern>net.rishon.codes.shade.net.md_5.bungee.api.plugin</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.yaml</pattern>
-                                    <shadedPattern>net.rishon.site.shade.org.yaml.snakeyaml</shadedPattern>
+                                    <shadedPattern>net.rishon.codes.shade.org.yaml.snakeyaml</shadedPattern>
                                     <includes>
                                         <include>org.yaml.**</include>
                                     </includes>
@@ -115,8 +115,8 @@
 
     <repositories>
         <repository>
-            <id>velocitypowered-repo</id>
-            <url>https://repo.velocitypowered.com/releases/</url>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-releases/</url>
         </repository>
         <repository>
             <id>bungeecord-repo</id>
@@ -128,18 +128,18 @@
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.10.0</version>
         </dependency>
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-config</artifactId>
-            <version>1.14-SNAPSHOT</version>
+            <version>1.16-R0.4</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>

@@ -1,14 +1,14 @@
-package net.rishon.codes.rsela.commands.messages;
+package net.rishon.codes.commands.messages;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.DataHandler;
-import net.rishon.codes.rsela.filemanager.FileHandler;
-import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.utils.Permissions;
+import net.rishon.codes.filemanager.DataHandler;
+import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.utils.ColorUtil;
+import net.rishon.codes.utils.Permissions;
 
 import java.util.Optional;
 
@@ -20,7 +20,8 @@ public class Message implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = FileHandler.getConfig();
+    private final Configuration config = FileHandler.getConfig();
+    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -29,8 +30,8 @@ public class Message implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Message.require-permission")) {
-            if (!source.hasPermission(Permissions.rSela_message)) {
-                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+            if (!source.hasPermission(permissions.rSela_message)) {
+                source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
             }
         }
@@ -73,7 +74,7 @@ public class Message implements SimpleCommand {
             Player onlineTarget = target.get();
             DataHandler dataHandler = new DataHandler(onlineTarget.getUniqueId());
 
-            if(dataHandler.getTPM() && !player.hasPermission(Permissions.rSela_messagetoggle_bypass)) {
+            if (dataHandler.getTPM() && !player.hasPermission(permissions.rSela_messagetoggle_bypass)) {
                 String blocked_pm = config.getString("Commands.MessageToggle.send-fail").replace("%target%", onlineTarget.getUsername());
                 player.sendMessage(ColorUtil.format(blocked_pm));
                 return;
@@ -95,6 +96,6 @@ public class Message implements SimpleCommand {
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
         if (!config.getBoolean("Commands.Message.require-permission")) return true;
-        return invocation.source().hasPermission(Permissions.rSela_message);
+        return invocation.source().hasPermission(permissions.rSela_message);
     }
 }

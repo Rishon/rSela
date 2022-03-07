@@ -1,13 +1,13 @@
-package net.rishon.codes.rsela.commands.proxy;
+package net.rishon.codes.commands.proxy;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.FileHandler;
-import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.utils.Permissions;
+import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.utils.ColorUtil;
+import net.rishon.codes.utils.Permissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,8 @@ public class IP implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = FileHandler.getConfig();
+    private final Configuration config = FileHandler.getConfig();
+    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -30,8 +31,8 @@ public class IP implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.IP.require-permission")) {
-            if (!source.hasPermission(Permissions.rSela_ip)) {
-                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+            if (!source.hasPermission(permissions.rSela_ip)) {
+                source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
             }
         }
@@ -61,7 +62,7 @@ public class IP implements SimpleCommand {
         String[] currentArgs = invocation.arguments();
         List<String> arg = new ArrayList<>();
 
-        if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_ip)) {
+        if (currentArgs.length == 1 && source.hasPermission(permissions.rSela_ip)) {
             for (Player player : server.getAllPlayers()) {
                 arg.add(player.getUsername());
             }

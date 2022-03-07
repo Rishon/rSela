@@ -1,4 +1,4 @@
-package net.rishon.codes.rsela.commands.proxy;
+package net.rishon.codes.commands.proxy;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
@@ -8,9 +8,9 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.FileHandler;
-import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.utils.Permissions;
+import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.utils.ColorUtil;
+import net.rishon.codes.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +25,8 @@ public class Send implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = FileHandler.getConfig();
+    private final Configuration config = FileHandler.getConfig();
+    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final SimpleCommand.Invocation invocation) {
@@ -34,8 +35,8 @@ public class Send implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Send.require-permission")) {
-            if (!source.hasPermission(Permissions.rSela_send)) {
-                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+            if (!source.hasPermission(permissions.rSela_send)) {
+                source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
             }
         }
@@ -118,13 +119,13 @@ public class Send implements SimpleCommand {
         Stream<String> serverFind = server.getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
-        if (currentArgs.length == 0 && source.hasPermission(Permissions.rSela_send)) {
+        if (currentArgs.length == 0 && source.hasPermission(permissions.rSela_send)) {
             return playerFind.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_send)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(permissions.rSela_send)) {
             return playerFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
-        } else if (currentArgs.length == 2 && source.hasPermission(Permissions.rSela_send)) {
+        } else if (currentArgs.length == 2 && source.hasPermission(permissions.rSela_send)) {
             return serverFind
                     .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
                     .collect(Collectors.toList());
@@ -136,7 +137,7 @@ public class Send implements SimpleCommand {
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
         if (!config.getBoolean("Commands.Send.require-permission")) return true;
-        return invocation.source().hasPermission(Permissions.rSela_send);
+        return invocation.source().hasPermission(permissions.rSela_send);
     }
 
 }

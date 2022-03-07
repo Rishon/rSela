@@ -1,4 +1,4 @@
-package net.rishon.codes.rsela.commands.proxy;
+package net.rishon.codes.commands.proxy;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
@@ -6,9 +6,9 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.FileHandler;
-import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.utils.Permissions;
+import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.utils.ColorUtil;
+import net.rishon.codes.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +23,8 @@ public class Find implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = FileHandler.getConfig();
+  private final  Configuration config = FileHandler.getConfig();
+    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final Invocation invocation) {
@@ -32,8 +33,8 @@ public class Find implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Find.require-permission")) {
-            if (!source.hasPermission(Permissions.rSela_find)) {
-                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+            if (!source.hasPermission(permissions.rSela_find)) {
+                source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
             }
         }
@@ -65,9 +66,9 @@ public class Find implements SimpleCommand {
 
         Stream<String> possibilities = server.getAllPlayers().stream().map(rs -> rs.getGameProfile().getName());
 
-        if (currentArgs.length == 0 && source.hasPermission(Permissions.rSela_find)) {
+        if (currentArgs.length == 0 && source.hasPermission(permissions.rSela_find)) {
             return possibilities.collect(Collectors.toList());
-        } else if (currentArgs.length == 1 && source.hasPermission(Permissions.rSela_find)) {
+        } else if (currentArgs.length == 1 && source.hasPermission(permissions.rSela_find)) {
             return possibilities
                     .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
                     .collect(Collectors.toList());
@@ -79,7 +80,7 @@ public class Find implements SimpleCommand {
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
         if (!config.getBoolean("Commands.Find.require-permission")) return true;
-        return invocation.source().hasPermission(Permissions.rSela_find);
+        return invocation.source().hasPermission(permissions.rSela_find);
     }
 
 }

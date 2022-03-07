@@ -1,4 +1,4 @@
-package net.rishon.codes.rsela.commands.proxy;
+package net.rishon.codes.commands.proxy;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
@@ -6,9 +6,9 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.rsela.filemanager.FileHandler;
-import net.rishon.codes.rsela.utils.ColorUtil;
-import net.rishon.codes.rsela.utils.Permissions;
+import net.rishon.codes.filemanager.FileHandler;
+import net.rishon.codes.utils.ColorUtil;
+import net.rishon.codes.utils.Permissions;
 
 public class Alert implements SimpleCommand {
 
@@ -18,7 +18,8 @@ public class Alert implements SimpleCommand {
         this.server = server;
     }
 
-    Configuration config = FileHandler.getConfig();
+    private final Configuration config = FileHandler.getConfig();
+    private final Permissions permissions = new Permissions();
 
     @Override
     public void execute(final SimpleCommand.Invocation invocation) {
@@ -27,8 +28,8 @@ public class Alert implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (config.getBoolean("Commands.Alert.require-permission")) {
-            if (!source.hasPermission(Permissions.rSela_alert)) {
-                source.sendMessage(ColorUtil.format(Permissions.noPermission));
+            if (!source.hasPermission(permissions.rSela_alert)) {
+                source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
             }
         }
@@ -94,6 +95,6 @@ public class Alert implements SimpleCommand {
     @Override
     public boolean hasPermission(SimpleCommand.Invocation invocation) {
         if (!config.getBoolean("Commands.Alert.require-permission")) return true;
-        return invocation.source().hasPermission(Permissions.rSela_alert);
+        return invocation.source().hasPermission(permissions.rSela_alert);
     }
 }
