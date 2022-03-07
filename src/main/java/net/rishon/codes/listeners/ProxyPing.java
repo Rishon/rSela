@@ -7,12 +7,12 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
-import net.rishon.codes.filemanager.FileHandler;
 
 public class ProxyPing {
 
-    private MiniMessage miniMessage;
     private final Configuration config = Main.getInstance().config;
+    private MiniMessage miniMessage;
+
     public ProxyPing(MiniMessage miniMessage) {
         this.miniMessage = miniMessage;
     }

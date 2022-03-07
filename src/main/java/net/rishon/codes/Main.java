@@ -29,22 +29,14 @@ import java.util.logging.Logger;
 public class Main {
 
     private static Main instance;
-
-    public static Main getInstance() {
-        return instance;
-    }
-
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
-
     // MiniMessage Library
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
-
     // File Handlers
     public FileHandler fileHandler;
     public Configuration config, data;
-
     // Permissions
     private Permissions permissions;
 
@@ -53,6 +45,10 @@ public class Main {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 
     @Subscribe

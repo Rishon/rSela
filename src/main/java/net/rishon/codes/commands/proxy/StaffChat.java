@@ -6,7 +6,6 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
-import net.rishon.codes.filemanager.FileHandler;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Permissions;
 
@@ -15,6 +14,7 @@ public class StaffChat implements SimpleCommand {
     private final ProxyServer server;
     private final Configuration config = Main.getInstance().config;
     private final Permissions permissions = new Permissions();
+
     public StaffChat(ProxyServer server) {
         this.server = server;
     }

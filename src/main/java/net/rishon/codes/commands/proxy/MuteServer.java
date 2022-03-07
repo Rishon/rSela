@@ -15,6 +15,7 @@ public class MuteServer implements SimpleCommand {
     private final ProxyServer server;
     private final Configuration config = Main.getInstance().config;
     private final Permissions permissions = new Permissions();
+
     public MuteServer(ProxyServer server) {
         this.server = server;
     }

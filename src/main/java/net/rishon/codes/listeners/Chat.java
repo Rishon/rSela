@@ -5,7 +5,6 @@ import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
-import net.rishon.codes.filemanager.FileHandler;
 import net.rishon.codes.utils.ColorUtil;
 import net.rishon.codes.utils.Lists;
 import net.rishon.codes.utils.Permissions;

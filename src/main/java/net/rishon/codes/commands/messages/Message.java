@@ -17,6 +17,7 @@ public class Message implements SimpleCommand {
     private final ProxyServer server;
     private final Configuration config = Main.getInstance().config;
     private final Permissions permissions = new Permissions();
+
     public Message(ProxyServer server) {
         this.server = server;
     }
