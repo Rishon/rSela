@@ -99,96 +99,105 @@ public class Main {
 
     private void registerListeners() {
         EventManager eventManager = this.server.getEventManager();
-        eventManager.register(this, new Connections());
-        eventManager.register(this, new ProxyPing(this.miniMessage));
-        this.logger.log(Level.INFO, "Successfully loaded rSela listeners.");
+        try {
+            this.logger.log(Level.INFO, "Loading rSela listeners...");
+            eventManager.register(this, new Connections());
+            eventManager.register(this, new ProxyPing(this.miniMessage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.server.shutdown();
+        } finally {
+            this.logger.log(Level.INFO, "Successfully loaded rSela listeners.");
+        }
     }
 
     private void registerCommands() {
-
         CommandManager command = this.server.getCommandManager();
-
-        this.logger.log(Level.INFO, "Loading rSela commands...");
-
-        command.register("rsela", new rSela());
-
-        if (this.config.getBoolean("Commands.Alert.enabled")) {
-            command.register(this.config.getString("Commands.Alert.command"), new Alert(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.Alert.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new Alert(this.server));
+        try {
+            this.logger.log(Level.INFO, "Loading rSela commands...");
+            command.register("rsela", new rSela());
+            if (this.config.getBoolean("Commands.Alert.enabled")) {
+                command.register(this.config.getString("Commands.Alert.command"), new Alert(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.Alert.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new Alert(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.Find.enabled")) {
-            command.register(this.config.getString("Commands.Find.command"), new Find(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.Find.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new Find(this.server));
+            if (this.config.getBoolean("Commands.Find.enabled")) {
+                command.register(this.config.getString("Commands.Find.command"), new Find(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.Find.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new Find(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.Send.enabled")) {
-            command.register(this.config.getString("Commands.Send.command"), new Send(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.Send.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new Send(this.server));
+            if (this.config.getBoolean("Commands.Send.enabled")) {
+                command.register(this.config.getString("Commands.Send.command"), new Send(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.Send.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new Send(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.ServerSend.enabled")) {
-            command.register(this.config.getString("Commands.ServerSend.command"), new ServerSend(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.ServerSend.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new ServerSend(this.server));
+            if (this.config.getBoolean("Commands.ServerSend.enabled")) {
+                command.register(this.config.getString("Commands.ServerSend.command"), new ServerSend(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.ServerSend.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new ServerSend(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.Maintenance.enabled")) {
-            command.register(this.config.getString("Commands.Maintenance.command"), new Maintenance());
-            List<String> Aliases = this.config.getStringList("Commands.Maintenance.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new Maintenance());
+            if (this.config.getBoolean("Commands.Maintenance.enabled")) {
+                command.register(this.config.getString("Commands.Maintenance.command"), new Maintenance());
+                List<String> Aliases = this.config.getStringList("Commands.Maintenance.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new Maintenance());
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.IP.enabled")) {
-            command.register(this.config.getString("Commands.IP.command"), new IP(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.IP.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new IP(this.server));
+            if (this.config.getBoolean("Commands.IP.enabled")) {
+                command.register(this.config.getString("Commands.IP.command"), new IP(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.IP.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new IP(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.StaffChat.enabled")) {
-            command.register(this.config.getString("Commands.StaffChat.command"), new StaffChat(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.StaffChat.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new StaffChat(this.server));
+            if (this.config.getBoolean("Commands.StaffChat.enabled")) {
+                command.register(this.config.getString("Commands.StaffChat.command"), new StaffChat(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.StaffChat.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new StaffChat(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.Message.enabled")) {
-            command.register(this.config.getString("Commands.Message.command"), new Message(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.Message.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new Message(this.server));
+            if (this.config.getBoolean("Commands.Message.enabled")) {
+                command.register(this.config.getString("Commands.Message.command"), new Message(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.Message.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new Message(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.ClearChat.enabled")) {
-            command.register(this.config.getString("Commands.ClearChat.command"), new ClearChat(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.ClearChat.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new ClearChat(this.server));
+            if (this.config.getBoolean("Commands.ClearChat.enabled")) {
+                command.register(this.config.getString("Commands.ClearChat.command"), new ClearChat(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.ClearChat.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new ClearChat(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.MuteServer.enabled")) {
-            command.register(this.config.getString("Commands.MuteServer.command"), new MuteServer(this.server));
-            List<String> Aliases = this.config.getStringList("Commands.MuteServer.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new MuteServer(this.server));
+            if (this.config.getBoolean("Commands.MuteServer.enabled")) {
+                command.register(this.config.getString("Commands.MuteServer.command"), new MuteServer(this.server));
+                List<String> Aliases = this.config.getStringList("Commands.MuteServer.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new MuteServer(this.server));
+                }
             }
-        }
-        if (this.config.getBoolean("Commands.MessageToggle.enabled")) {
-            command.register(this.config.getString("Commands.MessageToggle.command"), new MessageToggle());
-            List<String> Aliases = this.config.getStringList("Commands.MessageToggle.aliases");
-            for (String cmd : Aliases) {
-                command.register(cmd, new MessageToggle());
+            if (this.config.getBoolean("Commands.MessageToggle.enabled")) {
+                command.register(this.config.getString("Commands.MessageToggle.command"), new MessageToggle());
+                List<String> Aliases = this.config.getStringList("Commands.MessageToggle.aliases");
+                for (String cmd : Aliases) {
+                    command.register(cmd, new MessageToggle());
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.server.shutdown();
+        } finally {
+            this.logger.log(Level.INFO, "Successfully loaded rSela commands.");
         }
-        this.logger.log(Level.INFO, "Successfully loaded rSela commands.");
     }
 }
