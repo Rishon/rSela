@@ -9,8 +9,15 @@ import net.rishon.codes.utils.Permissions;
 
 public class Maintenance implements SimpleCommand {
 
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Configuration config;
+    private final Permissions permissions;
+    private final Main instance;
+
+    public Maintenance(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
+    }
 
     @Override
     public void execute(final Invocation invocation) {
@@ -46,7 +53,7 @@ public class Maintenance implements SimpleCommand {
             }
             source.sendMessage(ColorUtil.format(this.config.getString("Commands.Maintenance.on-message")));
             config.set("Maintenance.status", true);
-            Main.getInstance().fileHandler.saveConfig();
+            this.instance.fileHandler.saveConfig();
         } else if (args[0].equalsIgnoreCase("off")) {
             if (!this.config.getBoolean("Maintenance.status")) {
                 source.sendMessage(ColorUtil.format(this.config.getString("Commands.Maintenance.already-off-message")));
@@ -54,7 +61,7 @@ public class Maintenance implements SimpleCommand {
             }
             source.sendMessage(ColorUtil.format(this.config.getString("Commands.Maintenance.off-message")));
             config.set("Maintenance.status", false);
-            Main.getInstance().fileHandler.saveConfig();
+            this.instance.fileHandler.saveConfig();
         }
     }
 

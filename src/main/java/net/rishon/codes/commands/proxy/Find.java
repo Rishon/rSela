@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
@@ -17,12 +16,14 @@ import java.util.stream.Stream;
 
 public class Find implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public Find(ProxyServer server) {
-        this.server = server;
+    public Find(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -43,16 +44,16 @@ public class Find implements SimpleCommand {
             return;
         }
 
-        Optional<Player> player = server.getPlayer(args[0]);
+        Optional<Player> target = this.instance.getServer().getPlayer(args[0]);
 
         String offlineMessage = this.config.getString("Commands.Find.offline-message").replace("%target%", args[0]);
 
-        if (!player.isPresent()) {
+        if (target.isEmpty() || target.get().getCurrentServer().isEmpty()) {
             source.sendMessage(ColorUtil.format(offlineMessage));
             return;
         }
 
-        String foundMessage = this.config.getString("Commands.Find.online-message").replace("%target%", args[0]).replace("%server%", player.get().getCurrentServer().get().getServerInfo().getName());
+        String foundMessage = this.config.getString("Commands.Find.online-message").replace("%target%", args[0]).replace("%server%", target.get().getCurrentServer().get().getServerInfo().getName());
 
         source.sendMessage(ColorUtil.format(foundMessage));
     }
@@ -63,7 +64,7 @@ public class Find implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] currentArgs = invocation.arguments();
 
-        Stream<String> possibilities = server.getAllPlayers().stream().map(rs -> rs.getGameProfile().getName());
+        Stream<String> possibilities = this.instance.getServer().getAllPlayers().stream().map(rs -> rs.getGameProfile().getName());
 
         if (currentArgs.length == 0 && source.hasPermission(permissions.rSela_find)) {
             return possibilities.collect(Collectors.toList());

@@ -11,9 +11,11 @@ import java.nio.file.Path;
 
 public class FileHandler {
 
+    private final Main instance;
     private final Path directory;
 
-    public FileHandler(Path directory) {
+    public FileHandler(Main instance, Path directory) {
+        this.instance = instance;
         this.directory = directory;
     }
 
@@ -46,7 +48,7 @@ public class FileHandler {
 
     public boolean loadConfig() {
         try {
-            Main.getInstance().config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
+            this.instance.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,21 +58,21 @@ public class FileHandler {
 
     public void saveConfig() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.getInstance().config, new File(directory.toFile(), "config.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getConfig(), new File(directory.toFile(), "config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public Configuration getConfig() {
-        return Main.getInstance().config;
+        return this.instance.getConfig();
     }
 
     // Data file
 
     public boolean loadData() {
         try {
-            Main.getInstance().data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
+            this.instance.data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,14 +82,14 @@ public class FileHandler {
 
     public void saveData() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(Main.getInstance().data, new File(directory.toFile(), "data.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getData(), new File(directory.toFile(), "data.yml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public Configuration getData() {
-        return Main.getInstance().data;
+        return this.instance.getData();
     }
 
 }

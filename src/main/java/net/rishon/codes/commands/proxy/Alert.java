@@ -3,7 +3,6 @@ package net.rishon.codes.commands.proxy;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
@@ -12,12 +11,14 @@ import net.rishon.codes.utils.Permissions;
 
 public class Alert implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public Alert(ProxyServer server) {
-        this.server = server;
+    public Alert(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class Alert implements SimpleCommand {
 
             Title title = Title.title(ColorUtil.format(titleMessage), ColorUtil.format(subtitleMessage));
 
-            for (Player server : server.getAllPlayers()) {
+            for (Player server : this.instance.getServer().getAllPlayers()) {
 
                 if (this.config.getBoolean("Commands.Alert.title-message")) {
                     server.showTitle(title);
@@ -76,7 +77,7 @@ public class Alert implements SimpleCommand {
 
             Title title = Title.title(ColorUtil.format(titleMessage), ColorUtil.format(subtitleMessage));
 
-            for (Player server : server.getAllPlayers()) {
+            for (Player server : this.instance.getServer().getAllPlayers()) {
 
                 if (this.config.getBoolean("Commands.Alert.title-message")) {
                     server.showTitle(title);

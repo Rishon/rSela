@@ -5,7 +5,13 @@ import net.rishon.codes.Main;
 
 public class Permissions {
 
-    private final Configuration config = Main.getInstance().config;
+    private Configuration config;
+    private Main instance;
+
+    public Permissions(Main instance, Configuration config) {
+        this.instance = instance;
+        this.config = config;
+    }
 
     // MESSAGES
     public String rSela_prefix = "§8[§brSela§8]§r ";

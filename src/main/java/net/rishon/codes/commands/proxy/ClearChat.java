@@ -3,7 +3,6 @@ package net.rishon.codes.commands.proxy;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
@@ -14,12 +13,14 @@ import java.util.Collection;
 
 public class ClearChat implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public ClearChat(ProxyServer server) {
-        this.server = server;
+    public ClearChat(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class ClearChat implements SimpleCommand {
             String clearedMsg = this.config.getString("Commands.ClearChat.message").replace("%executor%", "CONSOLE");
 
             if (args[0].equalsIgnoreCase("all")) {
-                for (Player network : server.getAllPlayers()) {
+                for (Player network : this.instance.getServer().getAllPlayers()) {
                     for (int i = 0; i < 100; i++) {
                         network.sendMessage(Component.text("\n "));
                     }
@@ -63,7 +64,7 @@ public class ClearChat implements SimpleCommand {
 
             if (args[0].equalsIgnoreCase("all")) {
 
-                Collection<Player> networkPlayers = server.getAllPlayers();
+                Collection<Player> networkPlayers = this.instance.getServer().getAllPlayers();
 
                 for (Player network : networkPlayers) {
                     for (int i = 0; i < 100; i++) {
@@ -72,6 +73,11 @@ public class ClearChat implements SimpleCommand {
                     network.sendMessage(ColorUtil.format(clearedMsg));
                 }
             } else if (args[0].equalsIgnoreCase("server")) {
+
+                if (player.getCurrentServer().isEmpty()) {
+                    player.sendMessage(ColorUtil.format("&cAn error has occurred while attempting to clear the server chat."));
+                    return;
+                }
 
                 Collection<Player> serverPlayers = player.getCurrentServer().get().getServer().getPlayersConnected();
 

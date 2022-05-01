@@ -3,7 +3,6 @@ package net.rishon.codes.commands.proxy;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
@@ -15,12 +14,14 @@ import java.util.Optional;
 
 public class IP implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public IP(ProxyServer server) {
-        this.server = server;
+    public IP(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -43,8 +44,8 @@ public class IP implements SimpleCommand {
 
         String offlineMessage = this.config.getString("Commands.IP.offline-message").replace("%target%", args[0]);
 
-        Optional<Player> player = server.getPlayer(args[0]);
-        if (!player.isPresent()) {
+        Optional<Player> player = this.instance.getServer().getPlayer(args[0]);
+        if (player.isEmpty()) {
             source.sendMessage(ColorUtil.format(offlineMessage));
             return;
         }
@@ -62,7 +63,7 @@ public class IP implements SimpleCommand {
         List<String> arg = new ArrayList<>();
 
         if (currentArgs.length == 1 && source.hasPermission(permissions.rSela_ip)) {
-            for (Player player : server.getAllPlayers()) {
+            for (Player player : this.instance.getServer().getAllPlayers()) {
                 arg.add(player.getUsername());
             }
         }

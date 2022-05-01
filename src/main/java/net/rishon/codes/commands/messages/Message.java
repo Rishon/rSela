@@ -3,7 +3,6 @@ package net.rishon.codes.commands.messages;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
 import net.rishon.codes.filemanager.DataHandler;
@@ -14,12 +13,14 @@ import java.util.Optional;
 
 public class Message implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public Message(ProxyServer server) {
-        this.server = server;
+    public Message(Main instance) {
+        this.instance = instance;
+        this.config = instance.config;
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -42,8 +43,8 @@ public class Message implements SimpleCommand {
 
         if (!(source instanceof Player)) {
 
-            Optional<Player> target = server.getPlayer(args[0]);
-            if (!target.isPresent()) {
+            Optional<Player> target = this.instance.getServer().getPlayer(args[0]);
+            if (target.isEmpty()) {
                 String offlineMessage = this.config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 source.sendMessage(ColorUtil.format(offlineMessage));
                 return;
@@ -63,15 +64,15 @@ public class Message implements SimpleCommand {
         } else {
 
             Player player = (Player) source;
-            Optional<Player> target = server.getPlayer(args[0]);
-            if (!target.isPresent()) {
+            Optional<Player> target = this.instance.getServer().getPlayer(args[0]);
+            if (target.isEmpty()) {
                 String offlineMessage = this.config.getString("Commands.Message.player-offline").replace("%target%", args[0]);
                 player.sendMessage(ColorUtil.format(offlineMessage));
                 return;
             }
 
             Player onlineTarget = target.get();
-            DataHandler dataHandler = new DataHandler(onlineTarget.getUniqueId());
+            DataHandler dataHandler = new DataHandler(this.instance, onlineTarget.getUniqueId());
 
             if (dataHandler.getTPM() && !player.hasPermission(permissions.rSela_messagetoggle_bypass)) {
                 String blocked_pm = this.config.getString("Commands.MessageToggle.send-fail").replace("%target%", onlineTarget.getUsername());

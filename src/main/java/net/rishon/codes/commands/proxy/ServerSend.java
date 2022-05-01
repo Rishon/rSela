@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
@@ -18,12 +17,14 @@ import java.util.stream.Stream;
 
 public class ServerSend implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public ServerSend(ProxyServer server) {
-        this.server = server;
+    public ServerSend(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -46,16 +47,16 @@ public class ServerSend implements SimpleCommand {
 
         String invalidFirst = this.config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[0]);
 
-        Optional<RegisteredServer> serverFrom = server.getServer(args[0]);
-        if (!serverFrom.isPresent()) {
+        Optional<RegisteredServer> serverFrom = this.instance.getServer().getServer(args[0]);
+        if (serverFrom.isEmpty()) {
             source.sendMessage(ColorUtil.format(invalidFirst));
             return;
         }
 
         String invalidSecondary = this.config.getString("Commands.ServerSend.invalid-server").replace("%server%", args[1]);
 
-        Optional<RegisteredServer> serverTo = server.getServer(args[1]);
-        if (!serverTo.isPresent()) {
+        Optional<RegisteredServer> serverTo = this.instance.getServer().getServer(args[1]);
+        if (serverTo.isEmpty()) {
             source.sendMessage(ColorUtil.format(invalidSecondary));
             return;
         }
@@ -68,7 +69,7 @@ public class ServerSend implements SimpleCommand {
         String sentPlayers = this.config.getString("Commands.ServerSend.sent-players").replace("%firstServer%", args[0]).replace("%secondaryServer%", args[1]);
 
         for (Player target : serverFrom.get().getPlayersConnected()) {
-            Optional<RegisteredServer> connection = server.getServer(args[1]);
+            Optional<RegisteredServer> connection = this.instance.getServer().getServer(args[1]);
             if (!connection.isPresent()) {
                 source.sendMessage(ColorUtil.format(invalidSecondary));
                 return;
@@ -84,19 +85,14 @@ public class ServerSend implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] currentArgs = invocation.arguments();
 
-        Stream<String> serverPossibilities = server.getAllServers().stream()
-                .map(rs -> rs.getServerInfo().getName());
+        Stream<String> serverPossibilities = this.instance.getServer().getAllServers().stream().map(rs -> rs.getServerInfo().getName());
 
         if (currentArgs.length == 0 && source.hasPermission(permissions.rSela_serversend)) {
             return serverPossibilities.collect(Collectors.toList());
         } else if (currentArgs.length == 1 && source.hasPermission(permissions.rSela_serversend)) {
-            return serverPossibilities
-                    .filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length()))
-                    .collect(Collectors.toList());
+            return serverPossibilities.filter(name -> name.regionMatches(true, 0, currentArgs[0], 0, currentArgs[0].length())).collect(Collectors.toList());
         } else if (currentArgs.length == 2 && source.hasPermission(permissions.rSela_serversend)) {
-            return serverPossibilities
-                    .filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length()))
-                    .collect(Collectors.toList());
+            return serverPossibilities.filter(name -> name.regionMatches(true, 0, currentArgs[1], 0, currentArgs[1].length())).collect(Collectors.toList());
         } else {
             return ImmutableList.of();
         }

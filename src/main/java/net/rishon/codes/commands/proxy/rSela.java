@@ -9,8 +9,15 @@ import net.rishon.codes.utils.Permissions;
 
 public class rSela implements SimpleCommand {
 
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
+
+    public rSela(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
+    }
 
     @Override
     public void execute(final Invocation invocation) {
@@ -29,7 +36,7 @@ public class rSela implements SimpleCommand {
         }
 
         if (args[0].equalsIgnoreCase("reload")) {
-            if (Main.getInstance().fileHandler.loadConfig()) {
+            if(this.instance.fileHandler.loadConfig()) {
                 source.sendMessage(ColorUtil.format(permissions.rSela_prefix + "&aconfig.yml &7has been reloaded."));
             } else {
                 source.sendMessage(ColorUtil.format("&cFailed to reload &aconfig.yml"));

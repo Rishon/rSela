@@ -1,26 +1,29 @@
 package net.rishon.codes.filemanager;
 
-import net.rishon.codes.utils.Lists;
+import net.rishon.codes.Main;
 
 import java.util.UUID;
 
 public class DataHandler {
 
-    private UUID uuid;
+    private final Main instance;
+    private final UUID uuid;
 
-    public DataHandler(UUID uuid) {
+
+    public DataHandler(Main instance, UUID uuid) {
+        this.instance = instance;
         this.uuid = uuid;
     }
 
     public boolean getTPM() {
-        return Lists.toggled_messages.contains(getUUID().toString());
+        return this.instance.getDataManager().toggled_messages.contains(getUUID().toString());
     }
 
     public void setTPM(boolean value) {
         if (value && !getTPM()) {
-            Lists.toggled_messages.add(getUUID().toString());
+            this.instance.getDataManager().toggled_messages.add(getUUID().toString());
         } else if (!value && getTPM()) {
-            Lists.toggled_messages.remove(getUUID().toString());
+            this.instance.getDataManager().toggled_messages.remove(getUUID().toString());
         }
     }
 

@@ -3,21 +3,21 @@ package net.rishon.codes.commands.proxy;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Lists;
 import net.rishon.codes.utils.Permissions;
 
 public class MuteServer implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public MuteServer(ProxyServer server) {
-        this.server = server;
+    public MuteServer(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -47,22 +47,22 @@ public class MuteServer implements SimpleCommand {
         String un_muted_chat_notification = this.config.getString("Commands.MuteServer.chat-un-muted-msg").replace("%executor%", player.getUsername()).replace("%server%", server_name);
         String un_muted_message = this.config.getString("Commands.MuteServer.un-muted-message").replace("%executor%", player.getUsername()).replace("%server%", server_name);
 
-        if (!Lists.mutedServers.contains(server_name)) {
+        if (!this.instance.getDataManager().mutedServers.contains(server_name)) {
             player.sendMessage(ColorUtil.format(muted_message));
             if (this.config.getBoolean("Commands.MuteServer.chat-notify")) {
-                for (Player server : server.getAllPlayers()) {
+                for (Player server : this.instance.getServer().getAllPlayers()) {
                     server.sendMessage(ColorUtil.format(muted_chat_notification));
                 }
             }
-            Lists.mutedServers.add(server_name);
-        } else if (Lists.mutedServers.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+            this.instance.getDataManager().mutedServers.add(server_name);
+        } else if (this.instance.getDataManager().mutedServers.contains(player.getCurrentServer().get().getServerInfo().getName())) {
             player.sendMessage(ColorUtil.format(un_muted_message));
             if (this.config.getBoolean("Commands.MuteServer.chat-notify")) {
-                for (Player server : server.getAllPlayers()) {
+                for (Player server : this.instance.getServer().getAllPlayers()) {
                     server.sendMessage(ColorUtil.format(un_muted_chat_notification));
                 }
             }
-            Lists.mutedServers.remove(server_name);
+            this.instance.getDataManager().mutedServers.remove(server_name);
         }
     }
 

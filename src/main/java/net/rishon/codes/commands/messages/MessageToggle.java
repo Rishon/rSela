@@ -11,8 +11,15 @@ import net.rishon.codes.utils.Permissions;
 
 public class MessageToggle implements SimpleCommand {
 
-    private final Configuration data = Main.getInstance().data;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration data;
+    private final Permissions permissions;
+
+    public MessageToggle(Main instance) {
+        this.instance = instance;
+        this.data = this.instance.getData();
+        this.permissions = instance.getPermissions();
+    }
 
     @Override
     public void execute(final Invocation invocation) {
@@ -34,7 +41,7 @@ public class MessageToggle implements SimpleCommand {
         Player player = (Player) source;
 
 
-        DataHandler dataHandler = new DataHandler(player.getUniqueId());
+        DataHandler dataHandler = new DataHandler(this.instance, player.getUniqueId());
         if (dataHandler.getTPM()) {
             player.sendMessage(ColorUtil.format(this.data.getString("Commands.MessageToggle.toggled-on")));
             dataHandler.setTPM(false);

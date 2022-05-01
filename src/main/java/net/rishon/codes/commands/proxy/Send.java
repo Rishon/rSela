@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import net.md_5.bungee.config.Configuration;
@@ -19,12 +18,14 @@ import java.util.stream.Stream;
 
 public class Send implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public Send(ProxyServer server) {
-        this.server = server;
+    public Send(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -51,17 +52,23 @@ public class Send implements SimpleCommand {
         if (args[0].equalsIgnoreCase("all")) {
 
             source.sendMessage(ColorUtil.format(sentAll));
-            for (Player network : server.getAllPlayers()) {
+            for (Player network : this.instance.getServer().getAllPlayers()) {
                 if (network != source) {
+                    Optional<RegisteredServer> server = this.instance.getServer().getServer(args[1]);
 
-                    ServerInfo si = server.getServer(args[1]).get().getServerInfo();
+                    if (server.isEmpty()) {
+                        source.sendMessage(ColorUtil.format(invalidServer));
+                        return;
+                    }
+
+                    ServerInfo si = server.get().getServerInfo();
                     if (si == null) {
                         source.sendMessage(ColorUtil.format(invalidServer));
                         return;
                     }
 
-                    Optional<RegisteredServer> targetedServer = server.getServer(si.getName());
-                    if (!targetedServer.isPresent()) {
+                    Optional<RegisteredServer> targetedServer = this.instance.getServer().getServer(si.getName());
+                    if (targetedServer.isEmpty()) {
                         source.sendMessage(ColorUtil.format(invalidServer));
                         return;
                     }
@@ -72,11 +79,11 @@ public class Send implements SimpleCommand {
             return;
         }
 
-        Optional<Player> player = server.getPlayer(args[0]);
+        Optional<Player> player = this.instance.getServer().getPlayer(args[0]);
 
         String offlineMessage = this.config.getString("Commands.Send.player-offline").replace("%target%", args[0]);
 
-        if (!player.isPresent()) {
+        if (player.isEmpty()) {
             source.sendMessage(ColorUtil.format(offlineMessage));
             return;
         }
@@ -84,19 +91,29 @@ public class Send implements SimpleCommand {
         String alreadyIn = this.config.getString("Commands.Send.already-in-server").replace("%target%", args[0]).replace("%server%", args[1]);
         String sentPlayer = this.config.getString("Commands.Send.sent-player").replace("%target%", args[0]).replace("%server%", args[1]);
 
-        Optional<RegisteredServer> Connection = server.getServer(args[1]);
-        if (!Connection.isPresent()) {
+        Optional<RegisteredServer> Connection = this.instance.getServer().getServer(args[1]);
+        if (Connection.isEmpty()) {
             source.sendMessage(ColorUtil.format(invalidServer));
             return;
         }
 
-        ServerInfo si = server.getServer(args[1]).get().getServerInfo();
+        Optional<RegisteredServer> server = this.instance.getServer().getServer(args[1]);
+
+        if (server.isEmpty()) {
+            source.sendMessage(ColorUtil.format(invalidServer));
+            return;
+        }
+
+        ServerInfo si = server.get().getServerInfo();
         if (si == null) {
             source.sendMessage(ColorUtil.format(invalidServer));
             return;
+        } else if (player.get().getCurrentServer().isEmpty()) {
+            source.sendMessage(ColorUtil.format(invalidServer));
+            return;
         }
 
-        if (player.get().getCurrentServer().get().getServerInfo().equals(Connection.get().getServerInfo().getName())) {
+        if (player.get().getCurrentServer().get().getServerInfo().getName().equals(Connection.get().getServerInfo().getName())) {
             source.sendMessage(ColorUtil.format(alreadyIn));
             return;
         }
@@ -112,10 +129,10 @@ public class Send implements SimpleCommand {
         CommandSource source = invocation.source();
         String[] currentArgs = invocation.arguments();
 
-        Stream<String> playerFind = server.getAllPlayers().stream()
+        Stream<String> playerFind = this.instance.getServer().getAllPlayers().stream()
                 .map(rs -> rs.getGameProfile().getName());
 
-        Stream<String> serverFind = server.getAllServers().stream()
+        Stream<String> serverFind = this.instance.getServer().getAllServers().stream()
                 .map(rs -> rs.getServerInfo().getName());
 
         if (currentArgs.length == 0 && source.hasPermission(permissions.rSela_send)) {

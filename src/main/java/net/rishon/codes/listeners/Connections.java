@@ -12,8 +12,13 @@ import net.rishon.codes.utils.Permissions;
 
 public class Connections {
 
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Configuration config;
+    private final Permissions permissions;
+
+    public Connections(Main instance) {
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
+    }
 
     @Subscribe
     public void onLogin(LoginEvent event) {
@@ -23,11 +28,5 @@ public class Connections {
                 event.setResult(ResultedEvent.ComponentResult.denied(ColorUtil.format(this.config.getString("Maintenance.kick-message"))));
             }
         }
-    }
-
-    @Subscribe
-    public void onDisconnection(DisconnectEvent event) {
-
-        Player player = event.getPlayer();
     }
 }

@@ -3,7 +3,6 @@ package net.rishon.codes.commands.proxy;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.codes.Main;
 import net.rishon.codes.utils.ColorUtil;
@@ -11,12 +10,14 @@ import net.rishon.codes.utils.Permissions;
 
 public class StaffChat implements SimpleCommand {
 
-    private final ProxyServer server;
-    private final Configuration config = Main.getInstance().config;
-    private final Permissions permissions = new Permissions();
+    private final Main instance;
+    private final Configuration config;
+    private final Permissions permissions;
 
-    public StaffChat(ProxyServer server) {
-        this.server = server;
+    public StaffChat(Main instance) {
+        this.instance = instance;
+        this.config = instance.getConfig();
+        this.permissions = instance.getPermissions();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class StaffChat implements SimpleCommand {
 
             String staffChatFormat = this.config.getString("Commands.StaffChat.staff-format").replace("%executor%", "CONSOLE").replace("%message%", message).replace("%server%", "NONE");
 
-            for (Player staff : server.getAllPlayers()) {
+            for (Player staff : this.instance.getServer().getAllPlayers()) {
                 if (staff.hasPermission(permissions.rSela_staffchat)) {
                     staff.sendMessage(ColorUtil.format(staffChatFormat));
                 }
@@ -55,10 +56,14 @@ public class StaffChat implements SimpleCommand {
         } else {
 
             Player player = (Player) source;
+            if (player.getCurrentServer().isEmpty()) {
+                player.sendMessage(ColorUtil.format("&cAn error occurred while attempting to send your message."));
+                return;
+            }
 
             String staffChatFormat = this.config.getString("Commands.StaffChat.staff-format").replace("%executor%", player.getUsername()).replace("%message%", message).replace("%server%", player.getCurrentServer().get().getServerInfo().getName());
 
-            for (Player staff : server.getAllPlayers()) {
+            for (Player staff : this.instance.getServer().getAllPlayers()) {
                 if (staff.hasPermission(permissions.rSela_staffchat)) {
                     staff.sendMessage(ColorUtil.format(staffChatFormat));
                 }
