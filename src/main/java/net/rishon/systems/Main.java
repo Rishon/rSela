@@ -63,7 +63,7 @@ public class Main {
         }
 
         // Load Permissions
-        this.getLogger().log(Level.INFO, "Permissions loaded. Version: " + config.getString("version"));
+        this.setPermissions(new Permissions());
 
         handler = new MainHandler(this);
 

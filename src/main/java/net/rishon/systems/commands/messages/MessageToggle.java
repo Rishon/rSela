@@ -12,7 +12,7 @@ import net.rishon.systems.utils.Permissions;
 public class MessageToggle implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration data = Main.data;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public MessageToggle(Main instance) {
@@ -30,7 +30,7 @@ public class MessageToggle implements SimpleCommand {
             return;
         }
 
-        if (this.data.getBoolean("Commands.MessageToggle.require-permission")) {
+        if (this.config.getBoolean("Commands.MessageToggle.require-permission")) {
             if (!source.hasPermission(permissions.rSela_message)) {
                 source.sendMessage(ColorUtil.format(permissions.noPermission));
                 return;
@@ -41,17 +41,17 @@ public class MessageToggle implements SimpleCommand {
 
         DataHandler dataHandler = new DataHandler(this.instance, player.getUniqueId());
         if (dataHandler.getTPM()) {
-            player.sendMessage(ColorUtil.format(this.data.getString("Commands.MessageToggle.toggled-on")));
+            player.sendMessage(ColorUtil.format(this.config.getString("Commands.MessageToggle.toggled-on")));
             dataHandler.setTPM(false);
         } else if (!dataHandler.getTPM()) {
-            player.sendMessage(ColorUtil.format(this.data.getString("Commands.MessageToggle.toggled-off")));
+            player.sendMessage(ColorUtil.format(this.config.getString("Commands.MessageToggle.toggled-off")));
             dataHandler.setTPM(true);
         }
     }
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        if (!this.data.getBoolean("Commands.MessageToggle.require-permission")) return true;
+        if (!this.config.getBoolean("Commands.MessageToggle.require-permission")) return true;
         return invocation.source().hasPermission(permissions.rSela_messagetoggle);
     }
 }
