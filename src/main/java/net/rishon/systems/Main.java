@@ -34,7 +34,7 @@ public class Main {
     // File Handlers
     public FileHandler fileHandler;
     // Permissions
-    public Permissions permissions;
+    private Permissions permissions;
     // MainHandler
     private MainHandler handler;
 
@@ -86,5 +86,6 @@ public class Main {
     void stop() {
         handler.stop();
     }
+
 
 }

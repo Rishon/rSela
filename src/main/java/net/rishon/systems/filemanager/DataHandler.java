@@ -17,20 +17,19 @@ public class DataHandler {
     }
 
     public boolean getTPM() {
-        return this.getInstance().getHandler().getDataManager().toggled_messages.contains(getUUID().toString());
+        return this.getInstance().getHandler().getDataManager().getToggled_messages().contains(getUUID().toString());
     }
 
     public void setTPM(boolean value) {
         if (value && !getTPM()) {
-            this.getInstance().getHandler().getDataManager().toggled_messages.add(getUUID().toString());
+            this.getInstance().getHandler().getDataManager().getToggled_messages().add(getUUID().toString());
         } else if (!value && getTPM()) {
-            this.getInstance().getHandler().getDataManager().toggled_messages.remove(getUUID().toString());
+            this.getInstance().getHandler().getDataManager().getToggled_messages().remove(getUUID().toString());
         }
     }
 
     public UUID getUUID() {
         return this.uuid;
     }
-
 
 }

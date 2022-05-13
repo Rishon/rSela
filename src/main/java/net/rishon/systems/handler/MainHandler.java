@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.EventManager;
 import lombok.Data;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.systems.Main;
+import net.rishon.systems.api.SQLAPI;
 import net.rishon.systems.commands.messages.Message;
 import net.rishon.systems.commands.messages.MessageToggle;
 import net.rishon.systems.commands.proxy.*;
@@ -25,6 +26,8 @@ public class MainHandler {
     public dataManager dataManager;
     // Configuration
     public Configuration config, data;
+    // API
+    private SQLAPI sqlAPI;
 
     public MainHandler(Main instance) {
         this.instance = instance;
@@ -39,12 +42,25 @@ public class MainHandler {
 
         // Register plugin commands
         registerCommands();
-        // Register plugin listeners
-        registerListeners();
+        // Register plugin events
+        registerEvents();
 
         // Load dataManager
         this.setDataManager(new dataManager());
         this.getDataManager().setToggled_messages(this.getConfig().getStringList("toggled_messages"));
+
+        // Load SQLAPI
+        String root = "storage-method.mysql";
+        if (this.getConfig().getString("storage-method.type").equalsIgnoreCase("mysql")) {
+            // Connect to MySQL server
+            this.setSqlAPI(new SQLAPI(this.getConfig().getString(root + ".host"),
+                    this.getConfig().getString(root + ".username"),
+                    this.getConfig().getString(root + ".password"),
+                    this.getConfig().getString(root + ".database"),
+                    this.getConfig().getInt(root + ".port")));
+            // Create tables
+            this.getSqlAPI().createUsersTable();
+        }
     }
 
     public void stop() {
@@ -53,7 +69,7 @@ public class MainHandler {
         this.getInstance().getFileHandler().saveData();
     }
 
-    private void registerListeners() {
+    private void registerEvents() {
         EventManager eventManager = this.getInstance().getServer().getEventManager();
         try {
             this.getInstance().getLogger().log(Level.INFO, "Loading rSela listeners...");

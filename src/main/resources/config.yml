@@ -32,7 +32,7 @@ storage-method:
     database: db_name
     username: db_username
     password: db_password
-    table: rsela_data
+    table_prefix: rsela_
 
 
 # Commands
