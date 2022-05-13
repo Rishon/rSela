@@ -1,12 +1,12 @@
-package net.rishon.codes.listeners;
+package net.rishon.systems.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.Main;
-import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Permissions;
+import net.rishon.systems.Main;
+import net.rishon.systems.utils.ColorUtil;
+import net.rishon.systems.utils.Permissions;
 
 public class Chat {
 

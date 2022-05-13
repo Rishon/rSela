@@ -1,13 +1,13 @@
-package net.rishon.codes.commands.messages;
+package net.rishon.systems.commands.messages;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.Main;
-import net.rishon.codes.filemanager.DataHandler;
-import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Permissions;
+import net.rishon.systems.Main;
+import net.rishon.systems.filemanager.DataHandler;
+import net.rishon.systems.utils.ColorUtil;
+import net.rishon.systems.utils.Permissions;
 
 import java.util.Optional;
 

@@ -1,11 +1,11 @@
-package net.rishon.codes.commands.proxy;
+package net.rishon.systems.commands.proxy;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.Main;
-import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Permissions;
+import net.rishon.systems.Main;
+import net.rishon.systems.utils.ColorUtil;
+import net.rishon.systems.utils.Permissions;
 
 public class rSela implements SimpleCommand {
 
@@ -36,7 +36,7 @@ public class rSela implements SimpleCommand {
         }
 
         if (args[0].equalsIgnoreCase("reload")) {
-            if(this.instance.fileHandler.loadConfig()) {
+            if (this.instance.fileHandler.loadConfig()) {
                 source.sendMessage(ColorUtil.format(permissions.rSela_prefix + "&aconfig.yml &7has been reloaded."));
             } else {
                 source.sendMessage(ColorUtil.format("&cFailed to reload &aconfig.yml"));

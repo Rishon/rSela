@@ -1,13 +1,13 @@
-package net.rishon.codes.commands.proxy;
+package net.rishon.systems.commands.proxy;
 
 import com.google.common.collect.ImmutableList;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.Main;
-import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Permissions;
+import net.rishon.systems.Main;
+import net.rishon.systems.utils.ColorUtil;
+import net.rishon.systems.utils.Permissions;
 
 import java.util.List;
 import java.util.Optional;

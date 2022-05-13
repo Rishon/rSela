@@ -1,13 +1,13 @@
-package net.rishon.codes.commands.proxy;
+package net.rishon.systems.commands.proxy;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.title.Title;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.codes.Main;
-import net.rishon.codes.utils.ColorUtil;
-import net.rishon.codes.utils.Permissions;
+import net.rishon.systems.Main;
+import net.rishon.systems.utils.ColorUtil;
+import net.rishon.systems.utils.Permissions;
 
 public class Alert implements SimpleCommand {
 

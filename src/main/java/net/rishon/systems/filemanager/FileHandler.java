@@ -1,27 +1,24 @@
-package net.rishon.codes.filemanager;
+package net.rishon.systems.filemanager;
 
 import com.google.common.io.ByteStreams;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
-import net.rishon.codes.Main;
+import net.rishon.systems.Main;
 
 import java.io.*;
-import java.nio.file.Path;
 
 public class FileHandler {
 
-    private final Main instance;
-    private final Path directory;
+    public Main instance;
 
-    public FileHandler(Main instance, Path directory) {
+    public FileHandler(Main instance) {
         this.instance = instance;
-        this.directory = directory;
     }
 
     private File getFile(String resource) {
 
-        File folder = directory.toFile();
+        File folder = instance.getDataDirectory().toFile();
         if (!folder.exists()) folder.mkdir();
         File resourceFile = new File(folder, resource);
         try {
@@ -45,10 +42,9 @@ public class FileHandler {
     }
 
     // Config File
-
     public boolean loadConfig() {
         try {
-            this.instance.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml"));
+            this.instance.setConfig(ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("config.yml")));
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +54,7 @@ public class FileHandler {
 
     public void saveConfig() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getConfig(), new File(directory.toFile(), "config.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getConfig(), new File(instance.getDataDirectory().toFile(), "config.yml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,7 +65,6 @@ public class FileHandler {
     }
 
     // Data file
-
     public boolean loadData() {
         try {
             this.instance.data = ConfigurationProvider.getProvider(YamlConfiguration.class).load(getFile("data.yml"));
@@ -82,14 +77,10 @@ public class FileHandler {
 
     public void saveData() {
         try {
-            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getData(), new File(directory.toFile(), "data.yml"));
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.instance.getData(), new File(instance.getDataDirectory().toFile(), "data.yml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Configuration getData() {
-        return this.instance.getData();
     }
 
 }

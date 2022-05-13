@@ -1,8 +1,11 @@
-package net.rishon.codes.datamanager;
+package net.rishon.systems.datamanager;
+
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class dataManager {
 
     public ArrayList<String> mutedServers = new ArrayList<>();

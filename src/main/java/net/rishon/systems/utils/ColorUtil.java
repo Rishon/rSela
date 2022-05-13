@@ -1,4 +1,4 @@
-package net.rishon.codes.utils;
+package net.rishon.systems.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;

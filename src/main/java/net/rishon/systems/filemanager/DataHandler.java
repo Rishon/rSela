@@ -1,6 +1,6 @@
-package net.rishon.codes.filemanager;
+package net.rishon.systems.filemanager;
 
-import net.rishon.codes.Main;
+import net.rishon.systems.Main;
 
 import java.util.UUID;
 
@@ -8,7 +8,6 @@ public class DataHandler {
 
     private final Main instance;
     private final UUID uuid;
-
 
     public DataHandler(Main instance, UUID uuid) {
         this.instance = instance;
