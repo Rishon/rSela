@@ -11,11 +11,10 @@ import net.rishon.systems.utils.Permissions;
 
 public class Connections {
 
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public Connections(Main instance) {
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 

@@ -11,12 +11,11 @@ import net.rishon.systems.utils.Permissions;
 public class MuteServer implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public MuteServer(Main instance) {
         this.instance = instance;
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 
@@ -47,22 +46,22 @@ public class MuteServer implements SimpleCommand {
         String un_muted_chat_notification = this.config.getString("Commands.MuteServer.chat-un-muted-msg").replace("%executor%", player.getUsername()).replace("%server%", server_name);
         String un_muted_message = this.config.getString("Commands.MuteServer.un-muted-message").replace("%executor%", player.getUsername()).replace("%server%", server_name);
 
-        if (!this.instance.getDataManager().mutedServers.contains(server_name)) {
+        if (!this.instance.getHandler().getDataManager().mutedServers.contains(server_name)) {
             player.sendMessage(ColorUtil.format(muted_message));
             if (this.config.getBoolean("Commands.MuteServer.chat-notify")) {
                 for (Player server : this.instance.getServer().getAllPlayers()) {
                     server.sendMessage(ColorUtil.format(muted_chat_notification));
                 }
             }
-            this.instance.getDataManager().mutedServers.add(server_name);
-        } else if (this.instance.getDataManager().mutedServers.contains(player.getCurrentServer().get().getServerInfo().getName())) {
+            this.instance.getHandler().getDataManager().mutedServers.add(server_name);
+        } else if (this.instance.getHandler().getDataManager().mutedServers.contains(player.getCurrentServer().get().getServerInfo().getName())) {
             player.sendMessage(ColorUtil.format(un_muted_message));
             if (this.config.getBoolean("Commands.MuteServer.chat-notify")) {
                 for (Player server : this.instance.getServer().getAllPlayers()) {
                     server.sendMessage(ColorUtil.format(un_muted_chat_notification));
                 }
             }
-            this.instance.getDataManager().mutedServers.remove(server_name);
+            this.instance.getHandler().getDataManager().mutedServers.remove(server_name);
         }
     }
 

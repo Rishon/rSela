@@ -9,7 +9,7 @@ import java.util.List;
 public class dataManager {
 
     public ArrayList<String> mutedServers = new ArrayList<>();
-    public List<String> toggled_messages;
+    public List<String> toggled_messages = new ArrayList<>();
 
     public dataManager() {
     }

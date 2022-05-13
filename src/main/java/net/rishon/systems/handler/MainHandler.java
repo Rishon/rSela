@@ -2,7 +2,7 @@ package net.rishon.systems.handler;
 
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.event.EventManager;
-import lombok.Getter;
+import lombok.Data;
 import net.md_5.bungee.config.Configuration;
 import net.rishon.systems.Main;
 import net.rishon.systems.commands.messages.Message;
@@ -12,54 +12,54 @@ import net.rishon.systems.datamanager.dataManager;
 import net.rishon.systems.listeners.Chat;
 import net.rishon.systems.listeners.Connections;
 import net.rishon.systems.listeners.ProxyPing;
-import net.rishon.systems.utils.Permissions;
 
 import java.util.List;
 import java.util.logging.Level;
 
-@Getter
+@Data
 public class MainHandler {
 
     // Main plugin instance
     private final Main instance;
-
+    // DataManager
+    public dataManager dataManager;
     // Configuration
-    private Configuration config, data;
+    public Configuration config, data;
 
     public MainHandler(Main instance) {
         this.instance = instance;
+        this.config = Main.config;
+        this.data = Main.data;
     }
 
     public void init() {
 
-        this.config = this.getInstance().getConfig();
-        this.data = this.getInstance().getData();
+        // TO:DO Connect to rishon.codes web-server to receive live-verison of the plugin.
+        this.getConfig().set("version", "1.0.4");
 
         // Register plugin commands
         registerCommands();
         // Register plugin listeners
         registerListeners();
 
-        // Load Permissions
-        this.getInstance().setPermissions(new Permissions(this));
         // Load dataManager
-        this.getInstance().setDataManager(new dataManager());
-        this.getInstance().getDataManager().setToggled_messages(this.getConfig().getStringList("toggled_messages"));
+        this.setDataManager(new dataManager());
+        this.getDataManager().setToggled_messages(this.getConfig().getStringList("toggled_messages"));
     }
 
     public void stop() {
         // Saving yaml data
-        this.getData().set("toggled_messages", this.getInstance().getDataManager().toggled_messages);
+        this.getData().set("toggled_messages", this.getDataManager().toggled_messages);
         this.getInstance().getFileHandler().saveData();
     }
 
-    void registerListeners() {
+    private void registerListeners() {
         EventManager eventManager = this.getInstance().getServer().getEventManager();
         try {
             this.getInstance().getLogger().log(Level.INFO, "Loading rSela listeners...");
-            eventManager.register(this, new Connections(this.getInstance()));
-            eventManager.register(this, new Chat(this.getInstance()));
-            eventManager.register(this, new ProxyPing(this.getInstance(), this.getInstance().getMiniMessage()));
+            eventManager.register(this.getInstance(), new Connections(this.getInstance()));
+            eventManager.register(this.getInstance(), new Chat(this.getInstance()));
+            eventManager.register(this.getInstance(), new ProxyPing(this.getInstance(), this.getInstance().getMiniMessage()));
         } catch (Exception e) {
             e.printStackTrace();
             this.getInstance().getServer().shutdown();
@@ -68,7 +68,7 @@ public class MainHandler {
         }
     }
 
-    void registerCommands() {
+    private void registerCommands() {
         CommandManager command = this.getInstance().getServer().getCommandManager();
         try {
             this.getInstance().getLogger().log(Level.INFO, "Loading rSela commands...");

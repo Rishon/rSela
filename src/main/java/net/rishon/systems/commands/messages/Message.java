@@ -14,12 +14,11 @@ import java.util.Optional;
 public class Message implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public Message(Main instance) {
         this.instance = instance;
-        this.config = instance.config;
         this.permissions = instance.getPermissions();
     }
 

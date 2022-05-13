@@ -18,12 +18,11 @@ import java.util.stream.Stream;
 public class ServerSend implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public ServerSend(Main instance) {
         this.instance = instance;
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 

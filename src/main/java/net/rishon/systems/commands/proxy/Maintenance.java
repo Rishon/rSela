@@ -9,13 +9,12 @@ import net.rishon.systems.utils.Permissions;
 
 public class Maintenance implements SimpleCommand {
 
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
     private final Main instance;
 
     public Maintenance(Main instance) {
         this.instance = instance;
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 

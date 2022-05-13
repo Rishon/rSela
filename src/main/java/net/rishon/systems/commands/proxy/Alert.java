@@ -12,12 +12,11 @@ import net.rishon.systems.utils.Permissions;
 public class Alert implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public Alert(Main instance) {
         this.instance = instance;
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 

@@ -10,11 +10,10 @@ import net.rishon.systems.Main;
 
 public class ProxyPing {
 
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final MiniMessage miniMessage;
 
     public ProxyPing(Main instance, MiniMessage miniMessage) {
-        this.config = instance.getConfig();
         this.miniMessage = miniMessage;
     }
 

@@ -1,9 +1,11 @@
 package net.rishon.systems.filemanager;
 
+import lombok.Getter;
 import net.rishon.systems.Main;
 
 import java.util.UUID;
 
+@Getter
 public class DataHandler {
 
     private final Main instance;
@@ -15,14 +17,14 @@ public class DataHandler {
     }
 
     public boolean getTPM() {
-        return this.instance.getDataManager().toggled_messages.contains(getUUID().toString());
+        return this.getInstance().getHandler().getDataManager().toggled_messages.contains(getUUID().toString());
     }
 
     public void setTPM(boolean value) {
         if (value && !getTPM()) {
-            this.instance.getDataManager().toggled_messages.add(getUUID().toString());
+            this.getInstance().getHandler().getDataManager().toggled_messages.add(getUUID().toString());
         } else if (!value && getTPM()) {
-            this.instance.getDataManager().toggled_messages.remove(getUUID().toString());
+            this.getInstance().getHandler().getDataManager().toggled_messages.remove(getUUID().toString());
         }
     }
 

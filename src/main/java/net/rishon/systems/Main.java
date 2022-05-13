@@ -10,7 +10,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Data;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.config.Configuration;
-import net.rishon.systems.datamanager.dataManager;
 import net.rishon.systems.filemanager.FileHandler;
 import net.rishon.systems.handler.MainHandler;
 import net.rishon.systems.utils.Permissions;
@@ -20,23 +19,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Data
-@Plugin(id = "rsela", name = "rSela", version = "1.0.4", description = "Your all-in one plugin for a Velocity network server.", url = "rishon.codes", authors = {"Rishon"})
+@Plugin(id = "rsela", name = "rSela", version = "1.0.4", description = "Your all-in one plugin for a Velocity network server.", url = "rishon.systems", authors = {"Rishon"})
 public class Main {
 
-
+    // Configurations | Static access
+    public static Configuration config, data;
     private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
     // MiniMessage Library
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    // Instance
     public Main instance;
     // File Handlers
     public FileHandler fileHandler;
-    public Configuration config, data;
     // Permissions
     public Permissions permissions;
-    // DataManager
-    public dataManager dataManager;
+    // MainHandler
     private MainHandler handler;
 
     @Inject
@@ -63,8 +62,8 @@ public class Main {
             return;
         }
 
-        // TO:DO Connect to rishon.codes web-server to receive live-verison of the plugin.
-        this.config.set("version", "1.0.4");
+        // Load Permissions
+        this.getLogger().log(Level.INFO, "Permissions loaded. Version: " + config.getString("version"));
 
         handler = new MainHandler(this);
 
@@ -77,7 +76,7 @@ public class Main {
     @Subscribe
     private void onProxyShutdown(ProxyShutdownEvent event) {
         stop();
-        this.logger.log(Level.INFO, permissions.rSela_prefix + "Shutting down rSela...");
+        this.logger.log(Level.INFO, this.getPermissions().rSela_prefix + "Shutting down rSela...");
     }
 
     void init() {

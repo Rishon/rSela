@@ -14,12 +14,11 @@ import java.util.Collection;
 public class ClearChat implements SimpleCommand {
 
     private final Main instance;
-    private final Configuration config;
+    private final Configuration config = Main.config;
     private final Permissions permissions;
 
     public ClearChat(Main instance) {
         this.instance = instance;
-        this.config = instance.getConfig();
         this.permissions = instance.getPermissions();
     }
 
