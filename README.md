@@ -16,7 +16,7 @@ Your all-in one plugin for a Velocity network server.
 - Messaging system ``TO-DO``
 - StaffChat
 - Server Mute
-- Customize server MOTD
+- Customize server MOTD (Supports RGB colors and gradient from [MiniMessage](https://docs.adventure.kyori.net/))
 - Player Report Messages ``TO-DO``
 - Player-Data storage types ``TO-DO``
 - MultiLobby ``TO-DO``
