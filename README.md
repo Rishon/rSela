@@ -21,6 +21,10 @@ Your all-in one plugin for a Velocity network server.
 - Player-Data storage types ``TO-DO``
 - MultiLobby ``TO-DO``
 
+## Wiki
+
+Check out the wiki for more information (https://github.com/Rishon/rSela/wiki)
+
 ## Issues
 
 You can report bugs / issues on GitHub (https://github.com/Rishon/rSela/issues)
